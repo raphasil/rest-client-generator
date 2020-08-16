@@ -1,0 +1,73 @@
+/*
+ * Copyright RestClientGenerator
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+plugins {
+    id 'idea'
+    id 'java'
+    id 'project-report'
+    id 'org.springframework.boot' version '2.3.2.RELEASE' apply false
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE' apply false
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'project-report'
+    group "io.raphasil.${rootProject.name}"
+    version '1.0-SNAPSHOT'
+    sourceCompatibility = JavaVersion.VERSION_14
+
+    java {
+        registerFeature('provided') {
+            usingSourceSet(sourceSets.main)
+        }
+    }
+
+    dependencies {
+
+        constraints {
+
+            // spring
+            implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: spring_boot_version
+            implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: spring_boot_version
+            implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
+            annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-autoconfigure-processor', version: spring_boot_version
+            annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: spring_boot_version
+
+            // lombok
+            compileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
+            annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
+
+            // javaPoet
+            implementation group: 'com.squareup', name: 'javapoet', version: javapoet_version
+
+            // Google Auto
+            compileOnly group: 'com.google.auto.service', name: 'auto-service', version: google_auto_service_version
+            implementation group: 'com.google.auto', name: 'auto-common', version: google_auto_common_version
+
+            // slf4j
+            implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
+        }
+    }
+}
