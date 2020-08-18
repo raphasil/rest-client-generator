@@ -15,25 +15,28 @@
  *
  */
 
-package io.raphasil.generator.client.rest.api;
+apply plugin: 'java-library'
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
 
-/**
- * @author Raphael Nascimento (@raphasil)
- */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.SOURCE)
-public @interface RestClient {
-	String value();
+dependencies {
+    implementation project(':core')
 
-	String path() default "";
+    api 'org.springframework.boot:spring-boot-starter-webflux'
 
-	Class<? extends Annotation>[] annotations() default {};
+    implementation 'com.squareup:javapoet'
+
+    implementation 'com.google.auto:auto-common'
+
+    implementation 'org.apache.commons:commons-lang3'
+
+    testImplementation group: 'com.google.testing.compile', name: 'compile-testing', version: '0.18'
+
+    testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+
 }

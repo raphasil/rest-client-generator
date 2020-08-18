@@ -66,8 +66,14 @@ subprojects {
             compileOnly group: 'com.google.auto.service', name: 'auto-service', version: google_auto_service_version
             implementation group: 'com.google.auto', name: 'auto-common', version: google_auto_common_version
 
-            // slf4j
+            // Logback
             implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
+            implementation group: 'ch.qos.logback', name: 'logback-core', version: logback_version
+            implementation group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
+
+            // Apache Commons
+            implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+
         }
     }
 }

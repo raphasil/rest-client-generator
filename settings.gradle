@@ -17,4 +17,7 @@
 
 rootProject.name = 'rest-client-generator'
 include 'api'
+include 'core'
+include 'clients:webclient:webclient-processor'
+findProject(':clients:webclient:webclient-processor')?.name = 'webclient-processor'
 
