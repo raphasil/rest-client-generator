@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.raphasil.generator.client.rest.spring.webclient.WebClientGeneratorAutoConfiguration
+io.github.raphasil.generator.client.rest.webclient.spring.WebClientGeneratorAutoConfiguration

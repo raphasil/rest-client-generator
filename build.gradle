@@ -36,7 +36,7 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'java'
     apply plugin: 'project-report'
-    group "io.raphasil.${rootProject.name}"
+    group "io.github.raphasil.${rootProject.name}"
     version '1.0-SNAPSHOT'
     sourceCompatibility = JavaVersion.VERSION_14
 
