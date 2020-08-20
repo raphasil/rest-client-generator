@@ -27,10 +27,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.validation.annotation.Validated;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
+@Getter
 @Validated
+@AllArgsConstructor
 @ConstructorBinding
 @ConfigurationProperties(prefix = "generator.webclient")
 public class WebClientGeneratorProperties {
@@ -38,8 +40,9 @@ public class WebClientGeneratorProperties {
 	@Valid
 	private final Map<String, HttpClientProperties> clients;
 
-	@Data
+	@Getter
 	@Validated
+	@AllArgsConstructor
 	@ConstructorBinding
 	public static class HttpClientProperties {
 
@@ -58,8 +61,9 @@ public class WebClientGeneratorProperties {
 
 	}
 
-	@Data
+	@Getter
 	@Validated
+	@AllArgsConstructor
 	@ConstructorBinding
 	public static class Authentication {
 
@@ -68,8 +72,9 @@ public class WebClientGeneratorProperties {
 
 	}
 
-	@Data
+	@Getter
 	@Validated
+	@AllArgsConstructor
 	@ConstructorBinding
 	public static class BasicAuthAuthentication {
 
