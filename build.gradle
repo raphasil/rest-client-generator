@@ -20,6 +20,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'project-report'
+    id 'org.sonarqube' version '3.0'
     id 'org.springframework.boot' version '2.3.2.RELEASE' apply false
     id 'io.spring.dependency-management' version '1.0.10.RELEASE' apply false
 }
@@ -46,6 +47,7 @@ subprojects {
     }
 
     test {
+        reports.html.enabled = false
         useJUnitPlatform()
         testLogging {
             events "passed", "skipped", "failed"
@@ -107,5 +109,19 @@ codeCoverageReport.dependsOn {
     subprojects*.test
 }
 
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+    // Include the results from the `test` task in all subprojects
+    reportOn subprojects*.test
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "raphasil_rest-client-generator"
+        property "sonar.organization", "raphasil"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${rootDir}/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
+    }
+}
 
 

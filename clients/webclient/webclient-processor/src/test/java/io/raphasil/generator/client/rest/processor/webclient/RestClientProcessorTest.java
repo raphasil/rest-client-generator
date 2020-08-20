@@ -51,10 +51,7 @@ class RestClientProcessorTest {
 	@ParameterizedTest(name = "{0}.java should generate Generated{0}.java")
 	@MethodSource("listSuccessTemplates")
 	void validateSuccessTemplates(final String templateName) {
-		final var options = Options.builder()
-				.suppressGeneratorComment(true)
-				.suppressGeneratorTimestamp(true)
-				.verbose("trace")
+		final var options = Options.builder().suppressGeneratorComment(true).suppressGeneratorTimestamp(true).logLevel("trace")
 				.build()
 				.toCompileArgs();
 

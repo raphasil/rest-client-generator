@@ -21,13 +21,15 @@ import java.util.Map;
 import java.util.Set;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author Raphael Nascimento
  */
-@Data
+@Getter
 @Builder
+@RequiredArgsConstructor
 public class Options {
 	private static final String SUPPRESS_GENERATOR_TIMESTAMP = "restClientGenerator.suppressGeneratorTimestamp";
 
@@ -41,13 +43,13 @@ public class Options {
 
 	private final boolean suppressGeneratorComment;
 
-	private final String verbose;
+	private final String logLevel;
 
 	public static Options of(final Map<String, String> options) {
 		return Options.builder()
 				.suppressGeneratorComment(Boolean.parseBoolean(options.get(SUPPRESS_GENERATOR_COMMENT)))
 				.suppressGeneratorTimestamp(Boolean.parseBoolean(options.get(SUPPRESS_GENERATOR_TIMESTAMP)))
-				.verbose(options.getOrDefault(VERBOSE, "warn").toUpperCase())
+				.logLevel(options.getOrDefault(VERBOSE, "warn"))
 				.build();
 	}
 
@@ -58,6 +60,6 @@ public class Options {
 	public Iterable<String> toCompileArgs() {
 		return Set.of(String.format(COMPILE_ARG_FORMAT, SUPPRESS_GENERATOR_TIMESTAMP, suppressGeneratorTimestamp),
 				String.format(COMPILE_ARG_FORMAT, SUPPRESS_GENERATOR_COMMENT, suppressGeneratorComment),
-				String.format(COMPILE_ARG_FORMAT, VERBOSE, verbose));
+				String.format(COMPILE_ARG_FORMAT, VERBOSE, logLevel));
 	}
 }
