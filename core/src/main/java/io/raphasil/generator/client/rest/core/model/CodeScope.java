@@ -30,12 +30,14 @@ import io.raphasil.generator.client.rest.api.http.Body;
 import io.raphasil.generator.client.rest.api.http.Header;
 import io.raphasil.generator.client.rest.api.http.Path;
 import io.raphasil.generator.client.rest.api.http.Query;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author Raphael Nascimento
  */
-@Data
+@Getter
+@RequiredArgsConstructor
 public class CodeScope {
 	private final TypeElement interfaceAnnotated;
 
