@@ -80,7 +80,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 		elementUtils = processingEnv.getElementUtils();
 		filer = processingEnv.getFiler();
 		options = Options.of(processingEnv.getOptions());
-		logger = ProcessorLogger.create(processingEnv, options.getVerbose());
+		logger = ProcessorLogger.create(processingEnv, options.getLogLevel());
 	}
 
 	@Override

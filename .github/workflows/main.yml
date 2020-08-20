@@ -28,9 +28,6 @@ jobs:
 
       # Build Project
     - name: Build Project
-      run: ./gradlew build codeCoverageReport
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1.0.13
-      with:
-        file: build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml
-        fail_ci_if_error: true
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ./gradlew build testReport codeCoverageReport sonarqube
