@@ -16,13 +16,7 @@
  */
 
 apply plugin: 'java-library'
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
+apply plugin: 'jacoco'
 
 dependencies {
     implementation project(':core')
@@ -35,8 +29,8 @@ dependencies {
 
     implementation 'org.apache.commons:commons-lang3'
 
-    testImplementation group: 'com.google.testing.compile', name: 'compile-testing', version: '0.18'
+    testImplementation 'com.google.testing.compile:compile-testing'
 
-    testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
 
 }

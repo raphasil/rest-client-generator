@@ -15,17 +15,17 @@
  *
  */
 
-apply plugin: 'java-library'
+package io.raphasil.generator.webclient;
 
-dependencies {
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-    api project(':api')
-
-    implementation 'com.squareup:javapoet'
-
-    implementation 'com.google.auto:auto-common'
-
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+/**
+ * @author Raphael Nascimento
+ */
+@SpringBootApplication
+public class Application {
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 }

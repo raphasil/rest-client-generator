@@ -15,17 +15,21 @@
  *
  */
 
-apply plugin: 'java-library'
+package io.raphasil.test.it.config.helper;
 
-dependencies {
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
-    api project(':api')
+import org.springframework.boot.test.context.TestComponent;
+import org.springframework.http.HttpStatus;
 
-    implementation 'com.squareup:javapoet'
+/**
+ * @author Raphael Nascimento
+ */
+@TestComponent
+public class ClientOneHelper {
 
-    implementation 'com.google.auto:auto-common'
+	public void stubForGetSimpleString(final HttpStatus httpStatus, final Object response) {
+		stubFor(get("/client-one").willReturn(aResponse().withStatus(httpStatus.value()).withBody(String.valueOf(response))));
+	}
 
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
 }

@@ -15,17 +15,16 @@
  *
  */
 
-apply plugin: 'java-library'
+package io.raphasil.test.it.extention;
 
-dependencies {
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
-    api project(':api')
+import com.github.tomakehurst.wiremock.client.WireMock;
 
-    implementation 'com.squareup:javapoet'
-
-    implementation 'com.google.auto:auto-common'
-
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+public class WireMockResetIntegrationTestExtension implements BeforeEachCallback {
+	@Override
+	public void beforeEach(final ExtensionContext context) {
+		WireMock.reset();
+	}
 }

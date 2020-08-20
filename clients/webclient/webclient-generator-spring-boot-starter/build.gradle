@@ -1,3 +1,4 @@
+
 /*
  * Copyright RestClientGenerator
  *
@@ -20,12 +21,6 @@ apply plugin: 'java-library'
 dependencies {
 
     api project(':api')
+    api project(':clients:webclient:webclient-generator-spring-boot-autoconfigure')
 
-    implementation 'com.squareup:javapoet'
-
-    implementation 'com.google.auto:auto-common'
-
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
 }

@@ -15,17 +15,15 @@
  *
  */
 
-apply plugin: 'java-library'
+package io.raphasil.test.it.config;
 
-dependencies {
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
-    api project(':api')
-
-    implementation 'com.squareup:javapoet'
-
-    implementation 'com.google.auto:auto-common'
-
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+/**
+ * @author Raphael Nascimento
+ */
+@ComponentScan
+@TestConfiguration
+public class IntegrationTestConfiguration {
 }

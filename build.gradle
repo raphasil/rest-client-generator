@@ -18,6 +18,7 @@
 plugins {
     id 'idea'
     id 'java'
+    id 'jacoco'
     id 'project-report'
     id 'org.springframework.boot' version '2.3.2.RELEASE' apply false
     id 'io.spring.dependency-management' version '1.0.10.RELEASE' apply false
@@ -41,6 +42,13 @@ subprojects {
     java {
         registerFeature('provided') {
             usingSourceSet(sourceSets.main)
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
         }
     }
 
@@ -74,6 +82,30 @@ subprojects {
             // Apache Commons
             implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
 
+            //// TEST
+            testImplementation group: 'com.google.testing.compile', name: 'compile-testing', version: google_compile_testing_version
+            testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: junit_jupter_version
         }
     }
 }
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        html.enabled true
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
+}
+
+
+

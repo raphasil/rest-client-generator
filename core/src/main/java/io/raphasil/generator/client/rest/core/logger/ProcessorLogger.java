@@ -17,70 +17,71 @@
 
 package io.raphasil.generator.client.rest.core.logger;
 
-import java.util.Map;
-
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.tools.Diagnostic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.AppenderBase;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import io.raphasil.generator.client.rest.core.helper.EnumHelper;
 
 /**
  * @author Raphael Nascimento
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ProcessorLogger {
+public class ProcessorLogger {
 
-	public static Logger createLoggerFor(final Class<?> clazz, final ProcessingEnvironment env, final String level) {
-		final var lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-		final var ple = new PatternLayoutEncoder();
-		ple.setPattern("%level [%thread] %logger{10} %msg%n");
-		ple.setContext(lc);
-		ple.start();
+	private final int logLevel;
 
-		final var messageAppender = new MessageAppender(env);
-		messageAppender.setContext(lc);
-		messageAppender.start();
+	private final Messager messager;
 
-		final var logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(clazz);
-		logger.detachAppender("console");
-		logger.addAppender(messageAppender);
-		logger.setLevel(Level.toLevel(level));
-
-		return logger;
+	private ProcessorLogger(final Messager messager, final int logLevel) {
+		this.messager = messager;
+		this.logLevel = logLevel;
 	}
 
-	private static class MessageAppender extends AppenderBase<ILoggingEvent> {
+	public static ProcessorLogger create(final ProcessingEnvironment env, final String level) {
+		final var m = env.getMessager();
+		final var logLevel = EnumHelper.getEnumIgnoreCase(Level.class, level, Level.WARN).ordinal();
+		return new ProcessorLogger(m, logLevel);
+	}
 
-		private static final Map<Level, Diagnostic.Kind> levelMap = Map.of(Level.WARN,
-				Diagnostic.Kind.MANDATORY_WARNING,
-				Level.ERROR,
-				Diagnostic.Kind.ERROR);
+	public void trace(final String message, final Object... arguments) {
+		log(Level.TRACE, message, arguments);
+	}
 
-		private final Messager messager;
+	public void debug(final String message, final Object... arguments) {
+		log(Level.DEBUG, message, arguments);
+	}
 
-		public MessageAppender(final ProcessingEnvironment env) {
-			messager = env.getMessager();
-		}
+	public void info(final String message, final Object... arguments) {
+		log(Level.INFO, message, arguments);
+	}
 
-		@Override
-		public String getName() {
-			return "processing-message-appender";
-		}
+	public void warn(final String message, final Object... arguments) {
+		log(Level.WARN, message, arguments);
+	}
 
-		@Override
-		protected void append(final ILoggingEvent event) {
-			final var kind = levelMap.getOrDefault(event.getLevel(), Diagnostic.Kind.NOTE);
-			messager.printMessage(kind, event.getFormattedMessage());
+	public void error(final String message, final Object... arguments) {
+		log(Level.ERROR, message, arguments);
+	}
+
+	private void log(Level level, final String message, final Object... arguments) {
+		if (logLevel <= level.ordinal()) {
+			messager.printMessage(level.getDiagnosticKind(), String.format(message, arguments));
 		}
 	}
+
+	private enum Level {
+		TRACE(Diagnostic.Kind.NOTE), DEBUG(Diagnostic.Kind.NOTE), INFO(Diagnostic.Kind.NOTE), WARN(Diagnostic.Kind.MANDATORY_WARNING),
+		ERROR(Diagnostic.Kind.ERROR);
+
+		private final Diagnostic.Kind diagnosticKind;
+
+		Level(final Diagnostic.Kind diagnosticKind) {
+			this.diagnosticKind = diagnosticKind;
+		}
+
+		public Diagnostic.Kind getDiagnosticKind() {
+			return diagnosticKind;
+		}
+	}
+
 }

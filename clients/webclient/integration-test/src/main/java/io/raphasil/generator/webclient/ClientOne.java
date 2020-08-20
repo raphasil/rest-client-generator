@@ -15,17 +15,21 @@
  *
  */
 
-apply plugin: 'java-library'
+package io.raphasil.generator.webclient;
 
-dependencies {
+import org.springframework.stereotype.Component;
 
-    api project(':api')
+import io.raphasil.generator.client.rest.api.RestClient;
+import io.raphasil.generator.client.rest.api.http.method.GET;
+import reactor.core.publisher.Mono;
 
-    implementation 'com.squareup:javapoet'
+/**
+ * @author Raphael Nascimento
+ */
+@RestClient(value = "client-one", annotations = Component.class)
+public interface ClientOne {
 
-    implementation 'com.google.auto:auto-common'
+	@GET
+	Mono<String> getSimpleString();
 
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
 }

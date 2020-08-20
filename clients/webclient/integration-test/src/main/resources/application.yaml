@@ -1,0 +1,11 @@
+spring:
+  main:
+    lazy-initialization: true
+  application:
+    name: webclient-integration-test
+
+generator:
+  webclient:
+    clients:
+      client-one:
+        base-url: http://localhost:8383/client-one

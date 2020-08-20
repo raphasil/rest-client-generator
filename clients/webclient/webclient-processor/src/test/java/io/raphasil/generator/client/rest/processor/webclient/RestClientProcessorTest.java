@@ -51,9 +51,17 @@ class RestClientProcessorTest {
 	@ParameterizedTest(name = "{0}.java should generate Generated{0}.java")
 	@MethodSource("listSuccessTemplates")
 	void validateSuccessTemplates(final String templateName) {
-		Compilation compilation = javac().withOptions(new Options(true, true).toCompileArgs())
+		final var options = Options.builder()
+				.suppressGeneratorComment(true)
+				.suppressGeneratorTimestamp(true)
+				.verbose("trace")
+				.build()
+				.toCompileArgs();
+
+		Compilation compilation = javac().withOptions(options)
 				.withProcessors(new RestClientProcessor())
 				.compile(JavaFileObjects.forResource("templates/success/source/" + templateName + ".java"));
+
 		assertThat(compilation).succeeded();
 		assertThat(compilation).generatedSourceFile("Generated" + templateName)
 				.hasSourceEquivalentTo(JavaFileObjects.forResource("templates/success/expected/Generated" + templateName + ".java"));

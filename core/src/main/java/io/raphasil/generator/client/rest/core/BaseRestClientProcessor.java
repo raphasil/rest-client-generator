@@ -42,9 +42,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
-
-import org.slf4j.Logger;
 
 import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.AnnotationSpec;
@@ -69,7 +66,7 @@ import io.raphasil.generator.client.rest.core.model.Options;
  */
 public abstract class BaseRestClientProcessor extends AbstractProcessor {
 
-	private Logger logger;
+	private ProcessorLogger logger;
 
 	private Elements elementUtils;
 
@@ -77,16 +74,13 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 
 	private Options options;
 
-	private Types typeUtils;
-
 	@Override
 	public synchronized void init(ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
 		elementUtils = processingEnv.getElementUtils();
 		filer = processingEnv.getFiler();
-		logger = ProcessorLogger.createLoggerFor(this.getClass(), processingEnv, "TRACE");
 		options = Options.of(processingEnv.getOptions());
-		typeUtils = processingEnv.getTypeUtils();
+		logger = ProcessorLogger.create(processingEnv, options.getVerbose());
 	}
 
 	@Override
@@ -121,7 +115,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 		final var isInterface = el.getKind() == ElementKind.INTERFACE;
 
 		if (!isInterface) {
-			logger.warn("This element {} can not be processed, because it is not an interface", el);
+			logger.warn("This element %s can not be processed, because it is not an interface", el);
 		}
 
 		return isInterface;
@@ -130,14 +124,16 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 	private void processTypeElement(final TypeElement typeElement) {
 		try {
 			final var javaFile = generateCode(typeElement);
-			javaFile.writeTo(System.out);
+			logger.trace("file generated for %s \n %s", typeElement, javaFile);
 			javaFile.writeTo(filer);
-		} catch (Throwable e) {
-			logger.error("An error happening while generate the code for {}, {}", typeElement, e.getMessage(), e);
+		} catch (Exception e) {
+			logger.error("An error happening while generate the code for %s, %s \n%s", typeElement, e.getMessage(), e);
 		}
 	}
 
 	private JavaFile generateCode(final TypeElement interfaceAnnotated) {
+
+		logger.trace("Generating code for interface %s", interfaceAnnotated);
 
 		final var restClient = interfaceAnnotated.getAnnotation(RestClient.class);
 
@@ -193,6 +189,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 
 	private MethodSpec generateMethod(final TypeElement interfaceAnnotated, final String basePath, final Map<String, String> baseHeaders,
 			final ExecutableElement methodAnnoted) {
+		logger.trace("Generating code for method %s#%s", interfaceAnnotated, methodAnnoted);
 		final var httpAnnotation = HttpAnnotationHelper.findFirstHttpAnnotation(methodAnnoted);
 		final var path = HttpAnnotationHelper.getPath(httpAnnotation);
 		final var httpMethod = httpAnnotation.annotationType().getSimpleName();
@@ -251,11 +248,11 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 	private AnnotationSpec buildAnnotationGenerated() {
 		final var builder = AnnotationSpec.builder(Generated.class).addMember("value", "$S", this.getClass().getCanonicalName());
 
-		if (!options.getSuppressGeneratorTimestamp()) {
+		if (!options.isSuppressGeneratorTimestamp()) {
 			builder.addMember("date", "$S", Instant.now());
 		}
 
-		if (!options.getSuppressGeneratorComment()) {
+		if (!options.isSuppressGeneratorComment()) {
 			builder.addMember("comments", "$S", "version: todo, compiler: todo, environment: todo");
 		}
 
