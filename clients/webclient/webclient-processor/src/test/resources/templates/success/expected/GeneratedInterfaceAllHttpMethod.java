@@ -1,31 +1,14 @@
-
-/*
- * Copyright RestClientGenerator
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
+import io.github.raphasil.generator.client.rest.api.provider.ClientProvider;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
 import java.util.Map;
-
 import javax.annotation.processing.Generated;
-
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import io.github.raphasil.generator.client.rest.api.provider.ClientProvider;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -122,5 +105,4 @@ public class GeneratedInterfaceAllHttpMethod implements InterfaceAllHttpMethod {
 			final String name, final String typeName, final Object bodyAny) {
 		return webClient.put().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-put", "test-put").header("x-header-class", "test-class").header("x-header-put-param", headerPut).body(BodyInserters.fromValue(bodyAny)).retrieve().bodyToFlux(String.class);
 	}
-
 }
