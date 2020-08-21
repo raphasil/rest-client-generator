@@ -20,16 +20,17 @@ package io.github.raphasil.generator.client.rest.it.webclient;
 import org.springframework.stereotype.Component;
 
 import io.github.raphasil.generator.client.rest.api.RestClient;
+import io.github.raphasil.generator.client.rest.api.http.Path;
 import io.github.raphasil.generator.client.rest.api.http.method.GET;
 import reactor.core.publisher.Mono;
 
 /**
  * @author Raphael Nascimento
  */
-@RestClient(value = "client-one", annotations = Component.class)
-public interface ClientOne {
+@RestClient(value = "client-two", annotations = Component.class)
+public interface ClientTwoPathManipulation {
 
-	@GET
-	Mono<String> getSimpleString();
+	@GET("/test/{id}/another/{custom-path}")
+	Mono<String> getPathManipulation(@Path int id, @Path("custom-path") String custom);
 
 }

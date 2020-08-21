@@ -7,7 +7,7 @@
 [![Code Quality: Java](https://img.shields.io/lgtm/grade/java/g/raphasil/rest-client-generator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raphasil/rest-client-generator/context:java)
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/raphasil/rest-client-generator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raphasil/rest-client-generator/alerts)
 
-- [RestClientGenerator](#restclientgenerator)
+
   * [Introduction](#introduction)
   * [Getting Started](#getting-started)
     + [Spring Webclient](#spring-webclient)

@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.processing.Generated;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -49,19 +48,19 @@ public class GeneratedInterfaceAllHttpMethod implements InterfaceAllHttpMethod {
 	@Override
 	public Mono<String> patch(final String headerPatch, final String userId, final Integer id,
 			final String name, final String typeName, final String bodyValue) {
-		return webClient.patch().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-class", "test-class").header("x-header-patch", "test-patch").header("x-header-patch-param", headerPatch).body(BodyInserters.fromValue(bodyValue)).retrieve().bodyToMono(String.class);
+		return webClient.patch().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-class", "test-class").header("x-header-patch", "test-patch").header("x-header-patch-param", headerPatch).syncBody(bodyValue).retrieve().bodyToMono(String.class);
 	}
 
 	@Override
 	public Mono<String> post(final String headerPost, final String userId, final Integer id,
 			final String name, final String typeName, final String bodyPost) {
-		return webClient.post().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-post", "test-post").header("x-header-class", "test-class").header("x-header-post-param", headerPost).body(BodyInserters.fromValue(bodyPost)).retrieve().bodyToMono(String.class);
+		return webClient.post().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-post", "test-post").header("x-header-class", "test-class").header("x-header-post-param", headerPost).syncBody(bodyPost).retrieve().bodyToMono(String.class);
 	}
 
 	@Override
 	public Mono<String> put(final String headerPut, final String userId, final Integer id,
 			final String name, final String typeName, final Object bodyAny) {
-		return webClient.put().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-put", "test-put").header("x-header-class", "test-class").header("x-header-put-param", headerPut).body(BodyInserters.fromValue(bodyAny)).retrieve().bodyToMono(String.class);
+		return webClient.put().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-put", "test-put").header("x-header-class", "test-class").header("x-header-put-param", headerPut).syncBody(bodyAny).retrieve().bodyToMono(String.class);
 	}
 
 	@Override
@@ -91,18 +90,18 @@ public class GeneratedInterfaceAllHttpMethod implements InterfaceAllHttpMethod {
 	@Override
 	public Flux<String> patchFlux(final String headerPatch, final String userId, final Integer id,
 			final String name, final String typeName, final String bodyValue) {
-		return webClient.patch().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-class", "test-class").header("x-header-patch", "test-patch").header("x-header-patch-param", headerPatch).body(BodyInserters.fromValue(bodyValue)).retrieve().bodyToFlux(String.class);
+		return webClient.patch().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-class", "test-class").header("x-header-patch", "test-patch").header("x-header-patch-param", headerPatch).syncBody(bodyValue).retrieve().bodyToFlux(String.class);
 	}
 
 	@Override
 	public Flux<String> postFlux(final String headerPost, final String userId, final Integer id,
 			final String name, final String typeName, final String bodyPost) {
-		return webClient.post().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-post", "test-post").header("x-header-class", "test-class").header("x-header-post-param", headerPost).body(BodyInserters.fromValue(bodyPost)).retrieve().bodyToFlux(String.class);
+		return webClient.post().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-post", "test-post").header("x-header-class", "test-class").header("x-header-post-param", headerPost).syncBody(bodyPost).retrieve().bodyToFlux(String.class);
 	}
 
 	@Override
 	public Flux<String> putFlux(final String headerPut, final String userId, final Integer id,
 			final String name, final String typeName, final Object bodyAny) {
-		return webClient.put().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-put", "test-put").header("x-header-class", "test-class").header("x-header-put-param", headerPut).body(BodyInserters.fromValue(bodyAny)).retrieve().bodyToFlux(String.class);
+		return webClient.put().uri(uriBuilder -> uriBuilder.path("api/v1/users/{userId}").queryParam("name", name).queryParam("type-name", typeName).build(Map.of("type-id", id,"userId", userId))).header("x-header-put", "test-put").header("x-header-class", "test-class").header("x-header-put-param", headerPut).syncBody(bodyAny).retrieve().bodyToFlux(String.class);
 	}
 }

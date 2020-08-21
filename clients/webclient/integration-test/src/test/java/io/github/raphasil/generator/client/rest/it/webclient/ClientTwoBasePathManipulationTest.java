@@ -17,29 +17,30 @@
 
 package io.github.raphasil.generator.client.rest.it.webclient;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 import io.github.raphasil.test.it.IntegrationTest;
-import io.github.raphasil.test.it.config.helper.ClientOneHelper;
+import io.github.raphasil.test.it.config.helper.ClientTwoHelper;
 import reactor.test.StepVerifier;
 
 /**
  * @author Raphael Nascimento
  */
 @IntegrationTest
-class ClientOneTest {
+class ClientTwoBasePathManipulationTest {
 
 	@Autowired
-	private ClientOneHelper clientOneHelper;
+	private ClientTwoHelper clientTwoHelper;
 
 	@Autowired
-	private ClientOne clientOne;
+	private ClientTwoBasePathManipulation client;
 
 	@Test
-	void getSimpleString() {
-		clientOneHelper.stubForGetSimpleString(HttpStatus.OK, "ok");
-		StepVerifier.create(clientOne.getSimpleString()).expectNext("ok").verifyComplete();
+	void getBasePathManipulation() {
+		clientTwoHelper.getBasePathManipulation(20, "ppp", 55L, "___", "okay-base-path");
+		StepVerifier.create(client.getBasePathManipulation(20, "ppp", 55L, "___")).expectNext("okay-base-path").verifyComplete();
 	}
 }

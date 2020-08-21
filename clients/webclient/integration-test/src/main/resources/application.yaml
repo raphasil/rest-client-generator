@@ -9,3 +9,5 @@ generator:
     clients:
       client-one:
         base-url: http://localhost:8383/client-one
+      client-two:
+        base-url: http://localhost:8383/client-two

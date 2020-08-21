@@ -30,7 +30,6 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.auto.common.MoreTypes;
@@ -80,11 +79,11 @@ public class RestClientProcessor extends BaseRestClientProcessor {
 		scope.getHeaders().forEach((key, value) -> builder.add(".header($S, $S)", key, value));
 		scope.getHeaderParams().forEach((paramName, header) -> builder.add(".header($S, $L)", header.value(), paramName));
 
-		// build .body(from())
+		// build .syncBody()
 		Optional.ofNullable(scope.getBodyParam())
 				.map(VariableElement::getSimpleName)
 				.map(Objects::toString)
-				.ifPresent(param -> builder.add(".body($T.fromValue($L))", BodyInserters.class, param));
+				.ifPresent(param -> builder.add(".syncBody($L)", param));
 
 		builder.add(".retrieve()");
 
