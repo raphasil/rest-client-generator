@@ -32,32 +32,39 @@ public class ClientOneHelper {
 
 	public static final String CLIENT_ONE_PATH = "/client-one";
 
-	public void delete( final Object response) {
-		stubFor(WireMock.delete(urlPathEqualTo(CLIENT_ONE_PATH)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+	public void delete(final Object response) {
+		stubFor(WireMock.delete(urlPathEqualTo(CLIENT_ONE_PATH))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
-	public void get( final Object response) {
-		stubFor(WireMock.get(urlPathEqualTo(CLIENT_ONE_PATH)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+	public void get(final Object response) {
+		stubFor(WireMock.get(urlPathEqualTo(CLIENT_ONE_PATH))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
-	public void head( final Object response) {
-		stubFor(WireMock.head(urlPathEqualTo(CLIENT_ONE_PATH)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+	public void head(final Object response) {
+		stubFor(WireMock.head(urlPathEqualTo(CLIENT_ONE_PATH))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
-	public void options( final Object response) {
-		stubFor(WireMock.options(urlPathEqualTo(CLIENT_ONE_PATH)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+	public void options(final Object response) {
+		stubFor(WireMock.options(urlPathEqualTo(CLIENT_ONE_PATH))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
-	public void patch( final Object response) {
-		stubFor(WireMock.patch(urlPathEqualTo(CLIENT_ONE_PATH)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+	public void patch(final Object response) {
+		stubFor(WireMock.patch(urlPathEqualTo(CLIENT_ONE_PATH))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
-	public void post( final Object response) {
-		stubFor(WireMock.post(urlPathEqualTo(CLIENT_ONE_PATH)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+	public void post(final Object response) {
+		stubFor(WireMock.post(urlPathEqualTo(CLIENT_ONE_PATH))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
-	public void put( final Object response) {
-		stubFor(WireMock.put(urlPathEqualTo(CLIENT_ONE_PATH)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+	public void put(final Object response) {
+		stubFor(WireMock.put(urlPathEqualTo(CLIENT_ONE_PATH))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
 }

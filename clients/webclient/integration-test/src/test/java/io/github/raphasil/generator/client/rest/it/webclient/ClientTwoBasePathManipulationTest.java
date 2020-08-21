@@ -17,8 +17,6 @@
 
 package io.github.raphasil.generator.client.rest.it.webclient;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -34,17 +34,30 @@ public class ClientTwoHelper {
 	public static final String CLIENT_TWO_PATH = "/client-two";
 
 	public void get(final String size, String customName, final Object response) {
-		stubFor(WireMock.get(urlPathEqualTo(CLIENT_TWO_PATH)).withQueryParam("size", equalTo(size)).withQueryParam("custom-name", equalTo(customName)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+		stubFor(WireMock.get(urlPathEqualTo(CLIENT_TWO_PATH))
+				.withQueryParam("size", equalTo(size))
+				.withQueryParam("custom-name", equalTo(customName))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
 	public void getPathManipulation(final int id, String custom, final Object response) {
-		final var uri = UriComponentsBuilder.fromPath(CLIENT_TWO_PATH).path("/test/{id}/another/{custom-path}").build(id, custom).toString();
-		stubFor(WireMock.get(urlPathEqualTo(uri)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+		final var uri = UriComponentsBuilder.fromPath(CLIENT_TWO_PATH)
+				.path("/test/{id}/another/{custom-path}")
+				.build(id, custom)
+				.toString();
+		stubFor(WireMock.get(urlPathEqualTo(uri))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
-	public void getBasePathManipulation(final int id, final String custom, final long userId, final String customName, final Object response) {
-		final var uri = UriComponentsBuilder.fromPath(CLIENT_TWO_PATH).path("/base/{id}/another/{custom-path}").path("/test/{userId}/example/{custom-name}").build(id, custom, userId, customName).toString();
-		stubFor(WireMock.get(urlPathEqualTo(uri)).willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
+	public void getBasePathManipulation(final int id, final String custom, final long userId, final String customName,
+			final Object response) {
+		final var uri = UriComponentsBuilder.fromPath(CLIENT_TWO_PATH)
+				.path("/base/{id}/another/{custom-path}")
+				.path("/test/{userId}/example/{custom-name}")
+				.build(id, custom, userId, customName)
+				.toString();
+		stubFor(WireMock.get(urlPathEqualTo(uri))
+				.willReturn(aResponse().withStatus(HttpStatus.OK.value()).withBody(String.valueOf(response))));
 	}
 
 }

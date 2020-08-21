@@ -27,8 +27,8 @@ jobs:
         java-version: 1.14
 
       # Build Project
-    - name: Build Project
+    - name: Check Project
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: ./gradlew build testReport codeCoverageReport sonarqube
+      run: ./gradlew check testReport codeCoverageReport sonarqube

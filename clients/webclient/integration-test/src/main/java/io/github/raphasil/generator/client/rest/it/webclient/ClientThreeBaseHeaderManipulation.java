@@ -20,18 +20,27 @@ package io.github.raphasil.generator.client.rest.it.webclient;
 import org.springframework.stereotype.Component;
 
 import io.github.raphasil.generator.client.rest.api.RestClient;
-import io.github.raphasil.generator.client.rest.api.http.Path;
+import io.github.raphasil.generator.client.rest.api.http.Header;
+import io.github.raphasil.generator.client.rest.api.http.Headers;
 import io.github.raphasil.generator.client.rest.api.http.method.GET;
 import reactor.core.publisher.Mono;
 
 /**
  * @author Raphael Nascimento
  */
-@RestClient(value = "client-two", path = "/base/{id}/another/{custom-path}", annotations = Component.class)
-public interface ClientTwoBasePathManipulation {
+@RestClient(value = "client-three", annotations = Component.class)
+@Headers({ "x-interface-1: interface-1", "x-interface-2: interface-2" })
+public interface ClientThreeBaseHeaderManipulation {
 
-	@GET("/test/{userId}/example/{custom-name}")
-	Mono<String> getBasePathManipulation(@Path int id, @Path("custom-path") String custom, @Path long userId,
-			@Path("custom-name") String customName);
+	@GET
+	@Headers({ "x-method-1: method-1", "x-method-2: method-2" })
+	Mono<String> getWithAllPossibleHeaders(@Header("x-custom") String value);
+
+	@GET
+	@Headers({ "x-method-1: method-1", "x-method-2: method-2" })
+	Mono<String> getWithInterfaceAndMethod();
+
+	@GET
+	Mono<String> getWithParam(@Header("x-custom") String value);
 
 }

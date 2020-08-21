@@ -20,18 +20,25 @@ package io.github.raphasil.generator.client.rest.it.webclient;
 import org.springframework.stereotype.Component;
 
 import io.github.raphasil.generator.client.rest.api.RestClient;
-import io.github.raphasil.generator.client.rest.api.http.Path;
-import io.github.raphasil.generator.client.rest.api.http.method.GET;
+import io.github.raphasil.generator.client.rest.api.http.Body;
+import io.github.raphasil.generator.client.rest.api.http.method.PATCH;
+import io.github.raphasil.generator.client.rest.api.http.method.POST;
+import io.github.raphasil.generator.client.rest.api.http.method.PUT;
 import reactor.core.publisher.Mono;
 
 /**
  * @author Raphael Nascimento
  */
-@RestClient(value = "client-two", path = "/base/{id}/another/{custom-path}", annotations = Component.class)
-public interface ClientTwoBasePathManipulation {
+@RestClient(value = "client-four", annotations = Component.class)
+public interface ClientFourBody {
 
-	@GET("/test/{userId}/example/{custom-name}")
-	Mono<String> getBasePathManipulation(@Path int id, @Path("custom-path") String custom, @Path long userId,
-			@Path("custom-name") String customName);
+	@PATCH
+	Mono<String> patchBody(@Body Object any);
+
+	@POST
+	Mono<String> postBody(@Body Object object);
+
+	@PUT
+	Mono<String> putBody(@Body Object value);
 
 }

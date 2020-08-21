@@ -36,13 +36,10 @@ class ClientTwoQueryManipulationTest {
 	@Autowired
 	private ClientTwoQueryManipulation client;
 
-
-
 	@Test
 	void get() {
 		clientTwoHelper.get("10", "abc", "query-ok");
 		StepVerifier.create(client.get(10, "abc")).expectNext("query-ok").verifyComplete();
 	}
-
 
 }

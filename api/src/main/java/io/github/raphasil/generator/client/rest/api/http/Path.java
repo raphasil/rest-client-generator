@@ -39,7 +39,7 @@ import java.lang.annotation.Target;
  * &#64;GET("/user/{cool-nickname}")
  * Object getUserByName(@Path("cool-nickname") String name);
  *
- * Calling {@code service.getUserByName("JohnSnow")} yields {@code /user/JohnSnow}
+ * Calling {@code service.getUserByName("JonSnow")} yields {@code /user/JonSnow}
  *
  * @author Raphael Nascimento (@raphasil)
  */

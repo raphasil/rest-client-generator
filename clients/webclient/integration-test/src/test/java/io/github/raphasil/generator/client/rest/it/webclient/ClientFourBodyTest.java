@@ -17,29 +17,44 @@
 
 package io.github.raphasil.generator.client.rest.it.webclient;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.github.raphasil.test.it.IntegrationTest;
-import io.github.raphasil.test.it.config.helper.ClientTwoHelper;
+import io.github.raphasil.test.it.config.helper.ClientFourHelper;
 import reactor.test.StepVerifier;
 
 /**
  * @author Raphael Nascimento
  */
 @IntegrationTest
-class ClientTwoPathManipulationTest {
+class ClientFourBodyTest {
 
 	@Autowired
-	private ClientTwoHelper clientTwoHelper;
+	private ClientFourHelper clientFourHelper;
 
 	@Autowired
-	private ClientTwoPathManipulation client;
+	private ClientFourBody client;
 
 	@Test
-	void getPathManipulation() {
-		clientTwoHelper.getPathManipulation(100, "zzz", "path-ok");
-		StepVerifier.create(client.getPathManipulation(100, "zzz")).expectNext("path-ok").verifyComplete();
+	void patch() {
+		clientFourHelper.patchBody(Arrays.asList("abc", "cba"), "response-patch");
+		StepVerifier.create(client.patchBody(Arrays.asList("abc", "cba"))).expectNext("response-patch").verifyComplete();
 	}
 
+	@Test
+	void post() {
+		clientFourHelper.postBody(Map.of("a", "b"), "response-post");
+		StepVerifier.create(client.postBody(Map.of("a", "b"))).expectNext("response-post").verifyComplete();
+	}
+
+	@Test
+	void put() {
+		clientFourHelper.putBody(Set.of("x", "z"), "response-put");
+		StepVerifier.create(client.putBody(Set.of("x", "z"))).expectNext("response-put").verifyComplete();
+	}
 }

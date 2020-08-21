@@ -21,25 +21,36 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.github.raphasil.test.it.IntegrationTest;
-import io.github.raphasil.test.it.config.helper.ClientTwoHelper;
+import io.github.raphasil.test.it.config.helper.ClientThreeHelper;
 import reactor.test.StepVerifier;
 
 /**
  * @author Raphael Nascimento
  */
 @IntegrationTest
-class ClientTwoPathManipulationTest {
+class ClientThreeHeaderManipulationTest {
 
 	@Autowired
-	private ClientTwoHelper clientTwoHelper;
+	private ClientThreeHelper clientThreeHelper;
 
 	@Autowired
-	private ClientTwoPathManipulation client;
+	private ClientThreeHeaderManipulation client;
 
 	@Test
-	void getPathManipulation() {
-		clientTwoHelper.getPathManipulation(100, "zzz", "path-ok");
-		StepVerifier.create(client.getPathManipulation(100, "zzz")).expectNext("path-ok").verifyComplete();
+	void getWithMethodAndParam() {
+		clientThreeHelper.getWithMethodAndParam("355", "ok-header-method-param");
+		StepVerifier.create(client.getWithMethodAndParam("355")).expectNext("ok-header-method-param").verifyComplete();
 	}
 
+	@Test
+	void getWithMethod() {
+		clientThreeHelper.getWithMethod("ok-header-method");
+		StepVerifier.create(client.getWithMethod()).expectNext("ok-header-method").verifyComplete();
+	}
+
+	@Test
+	void getWithParam() {
+		clientThreeHelper.getWithParam("455", "ok-header-param");
+		StepVerifier.create(client.getWithParam("455")).expectNext("ok-header-param").verifyComplete();
+	}
 }
