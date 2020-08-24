@@ -95,7 +95,7 @@ public class RestClientProcessor extends BaseRestClientProcessor {
 				? returnType.getTypeArguments().get(0)
 				: getTypeElement(String.class));
 
-		builder.add(".$L($T.class)", isMono ? "bodyToMono" : "bodyToFlux", returnQualifiedType);
+		builder.addStatement(".$L($T.class)", isMono ? "bodyToMono" : "bodyToFlux", returnQualifiedType);
 
 		return builder.build();
 	}

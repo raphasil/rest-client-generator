@@ -1,0 +1,23 @@
+spring:
+  main:
+    lazy-initialization: true
+  application:
+    name: webclient-integration-test
+
+generator:
+  resttemplate:
+    clients:
+      client-one:
+        base-url: http://localhost:8383/client-one
+      client-two:
+        base-url: http://localhost:8383/client-two
+      client-three:
+        base-url: http://localhost:8383/client-three
+        default-headers:
+          x-default-header: default
+      client-four:
+        base-url: http://localhost:8383/client-four
+        authentication:
+          basic-auth:
+            username: Jon Snow
+            password: Daenerys Targaryen
