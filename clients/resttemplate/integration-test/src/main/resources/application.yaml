@@ -5,18 +5,18 @@ spring:
     name: webclient-integration-test
 
 generator:
-  webclient:
+  resttemplate:
     clients:
       client-one:
-        base-url: http://localhost:8382/client-one
+        base-url: http://localhost:8381/client-one
       client-two:
-        base-url: http://localhost:8382/client-two
+        base-url: http://localhost:8381/client-two
       client-three:
-        base-url: http://localhost:8382/client-three
+        base-url: http://localhost:8381/client-three
         default-headers:
           x-default-header: default
       client-four:
-        base-url: http://localhost:8382/client-four
+        base-url: http://localhost:8381/client-four
         authentication:
           basic-auth:
             username: Jon Snow

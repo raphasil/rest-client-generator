@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.github.raphasil.generator.client.rest.resttemplate.spring.RestTemplateGeneratorAutoConfiguration
