@@ -1,6 +1,7 @@
 ---
 layout: single
 title:  "Documentation"
+classes: wide
 author_profile: no
 sidebar:
   nav: "docs"
