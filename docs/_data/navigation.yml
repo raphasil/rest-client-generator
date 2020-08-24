@@ -1,0 +1,25 @@
+docs:
+  - title: Introduction
+    url: '#introduction'
+
+  - title: "Getting Started"
+    url: "#getting-started"
+    children:
+      - title: "Spring Web Client"
+        url: "#spring-webclient"
+      - title: "Spring RestTemplate"
+        url: "#spring-resttemplate"
+      - title: "OKHttp"
+        url: "#okhttp"
+
+  - title: "API Declaration"
+    url: "#api-declaration"
+    children:
+      - title: "Request Method"
+        url: "#request-method"
+      - title: "URL Manipulation"
+        url: "#url-manipulation"
+      - title: "Request Body"
+        url: "#request-body"
+      - title: "Header Manipulation"
+        url: "#header-manipulation"
