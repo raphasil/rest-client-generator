@@ -44,6 +44,6 @@ import io.github.raphasil.test.it.extention.WireMockResetIntegrationTestExtensio
 @ExtendWith({ WireMockResetIntegrationTestExtension.class })
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = { IntegrationTestConfiguration.class })
-@AutoConfigureWireMock(port = 8383)
+@AutoConfigureWireMock(port = 8382)
 public @interface IntegrationTest {
 }
