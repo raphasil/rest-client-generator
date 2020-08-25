@@ -26,7 +26,7 @@ import io.github.raphasil.generator.client.rest.core.helper.EnumHelper;
 /**
  * @author Raphael Nascimento
  */
-public class ProcessorLogger {
+public final class ProcessorLogger {
 
 	private final int logLevel;
 
@@ -39,7 +39,7 @@ public class ProcessorLogger {
 
 	public static ProcessorLogger create(final ProcessingEnvironment env, final String level) {
 		final var m = env.getMessager();
-		final var logLevel = EnumHelper.getEnumIgnoreCase(Level.class, level, Level.WARN).ordinal();
+		final var logLevel = EnumHelper.getEnumIgnoreCase(Level.class, level, Level.TRACE).ordinal();
 		return new ProcessorLogger(m, logLevel);
 	}
 

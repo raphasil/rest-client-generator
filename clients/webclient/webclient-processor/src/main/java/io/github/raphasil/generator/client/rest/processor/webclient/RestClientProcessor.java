@@ -83,7 +83,7 @@ public class RestClientProcessor extends BaseRestClientProcessor {
 		Optional.ofNullable(scope.getBodyParam())
 				.map(VariableElement::getSimpleName)
 				.map(Objects::toString)
-				.ifPresent(param -> builder.add(".syncBody($L)", param));
+				.ifPresent(param -> builder.add(".bodyValue($L)", param));
 
 		builder.add(".retrieve()");
 
@@ -95,7 +95,7 @@ public class RestClientProcessor extends BaseRestClientProcessor {
 				? returnType.getTypeArguments().get(0)
 				: getTypeElement(String.class));
 
-		builder.add(".$L($T.class)", isMono ? "bodyToMono" : "bodyToFlux", returnQualifiedType);
+		builder.addStatement(".$L($T.class)", isMono ? "bodyToMono" : "bodyToFlux", returnQualifiedType);
 
 		return builder.build();
 	}

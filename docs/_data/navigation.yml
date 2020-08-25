@@ -26,3 +26,4 @@ docs:
 main:
   - title: "<i class='fab fa-fw fa-github' aria-hidden='true' title='Source Code'></i>"
     url: "https://github.com/raphasil/rest-client-generator"
+

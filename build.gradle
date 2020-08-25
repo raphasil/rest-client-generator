@@ -60,6 +60,7 @@ subprojects {
 
             // spring
             implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: spring_boot_version
+            implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: spring_boot_version
             implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: spring_boot_version
             implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
             annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-autoconfigure-processor', version: spring_boot_version
