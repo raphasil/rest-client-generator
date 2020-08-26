@@ -15,12 +15,20 @@
  *
  */
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+
 plugins {
     id 'idea'
     id 'java'
     id 'jacoco'
     id 'project-report'
-    id 'org.sonarqube' version '3.0'
     id 'org.springframework.boot' version '2.3.2.RELEASE' apply false
     id 'io.spring.dependency-management' version '1.0.10.RELEASE' apply false
 }
@@ -36,8 +44,10 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'java'
     apply plugin: 'project-report'
+
+
     group "io.github.raphasil.${rootProject.name}"
-    version '1.0-SNAPSHOT'
+    version = '0.0.1' + (project.hasProperty('release') ? '' : '-SNAPSHOT')
     sourceCompatibility = JavaVersion.VERSION_14
 
     java {
@@ -116,13 +126,4 @@ task testReport(type: TestReport) {
     reportOn subprojects*.test
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectKey", "raphasil_rest-client-generator"
-        property "sonar.organization", "raphasil"
-        property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${rootDir}/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
-    }
-}
-
-
+apply from: file("${rootProject.projectDir}/tools/gradle/publish.gradle")

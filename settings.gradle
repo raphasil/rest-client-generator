@@ -16,22 +16,30 @@
  */
 
 rootProject.name = 'rest-client-generator'
-include 'api'
-include 'core'
-include 'clients:webclient:webclient-processor'
-findProject(':clients:webclient:webclient-processor')?.name = 'webclient-processor'
-include 'clients:webclient:webclient-generator-spring-boot-autoconfigure'
-findProject(':clients:webclient:webclient-generator-spring-boot-autoconfigure')?.name = 'webclient-generator-spring-boot-autoconfigure'
-include 'clients:webclient:webclient-generator-spring-boot-starter'
-findProject(':clients:webclient:webclient-generator-spring-boot-starter')?.name = 'webclient-generator-spring-boot-starter'
-include 'clients:webclient:integration-test'
-findProject(':clients:webclient:integration-test')?.name = 'integration-test'
-include 'clients:resttemplate:resttemplate-processor'
-findProject(':clients:resttemplate:resttemplate-processor')?.name = 'resttemplate-processor'
-include 'clients:resttemplate:resttemplate-generator-spring-boot-autoconfigure'
-findProject(':clients:resttemplate:resttemplate-generator-spring-boot-autoconfigure')?.name = 'resttemplate-generator-spring-boot-autoconfigure'
-include 'clients:resttemplate:resttemplate-generator-spring-boot-starter'
-findProject(':clients:resttemplate:resttemplate-generator-spring-boot-starter')?.name = 'resttemplate-generator-spring-boot-starter'
-include 'clients:resttemplate:integration-test'
-findProject(':clients:resttemplate:integration-test')?.name = 'integration-test'
+
+include ':api',
+        ':core',
+
+        ':webclient:webclient-processor',
+        ':webclient:webclient-generator-spring-boot-starter',
+        ':webclient:webclient-generator-spring-boot-autoconfigure',
+        ':webclient:integration-test',
+
+        ':resttemplate:resttemplate-processor',
+        ':resttemplate:resttemplate-generator-spring-boot-starter',
+        ':resttemplate:resttemplate-generator-spring-boot-autoconfigure',
+        ':resttemplate:integration-test'
+
+project(':api').projectDir = "$rootDir/api" as File
+project(':core').projectDir = "$rootDir/core" as File
+
+project(':webclient:webclient-processor').projectDir = "$rootDir/webclient/webclient-processor" as File
+project(':webclient:webclient-generator-spring-boot-starter').projectDir = "$rootDir/webclient/webclient-generator-spring-boot-starter" as File
+project(':webclient:webclient-generator-spring-boot-autoconfigure').projectDir = "$rootDir/webclient/webclient-generator-spring-boot-autoconfigure" as File
+project(':webclient:integration-test').projectDir = "$rootDir/webclient/integration-test" as File
+
+project(':resttemplate:resttemplate-processor').projectDir = "$rootDir/resttemplate/resttemplate-processor" as File
+project(':resttemplate:resttemplate-generator-spring-boot-starter').projectDir = "$rootDir/resttemplate/resttemplate-generator-spring-boot-starter" as File
+project(':resttemplate:resttemplate-generator-spring-boot-autoconfigure').projectDir = "$rootDir/resttemplate/resttemplate-generator-spring-boot-autoconfigure" as File
+project(':resttemplate:integration-test').projectDir = "$rootDir/resttemplate/integration-test" as File
 

@@ -38,8 +38,9 @@ import java.lang.annotation.Target;
  * <pre><code>
  * &#64;GET("/user/{cool-nickname}")
  * Object getUserByName(@Path("cool-nickname") String name);
+ * </code></pre>
  *
- * Calling {@code service.getUserByName("JonSnow")} yields {@code /user/JonSnow}
+ * Calling <code>service.getUserByName("JonSnow")</code> yields <code>/user/JonSnow</code>
  *
  * @author Raphael Nascimento (@raphasil)
  */
@@ -48,7 +49,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Path {
 	/**
-	 * The path name. If it is not defined, it will be the variable name.
+	 * @return The path name. If it is not defined, it will be the variable name.
 	 */
 	String value() default "";
 }
