@@ -50,7 +50,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Query {
 	/**
-	 * The query parameter name. If it is not defined, it will be the variable name.
+	 * @return The query parameter name. If it is not defined, it will be the variable name.
 	 */
 	String value() default "";
 }

@@ -156,6 +156,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 		return JavaFile.builder(getPackageName(interfaceAnnotated), clazz).build();
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<AnnotationSpec> buildAnnotations(final TypeElement interfaceAnnotated) {
 
 		return interfaceAnnotated.getAnnotationMirrors()

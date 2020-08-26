@@ -1,0 +1,38 @@
+name: Publish package to the Maven Central Repository
+on:
+  release:
+    types: [ created ]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Setup JDK
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.14
+
+      # Publish Project
+      - name: Build Project
+        run: ./gradlew build -Prelease
+
+      # Publish Release to Maven Central
+      - name: Publish Snapshot
+        env:
+          GPG_PRIVITE_KEY: ${{ secrets.GPG_PRIVITE_KEY }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        run: |
+          echo $GPG_PRIVITE_KEY | base64 --decode > $GITHUB_WORKSPACE/secring.gpg
+
+          ./gradlew uploadArchives \
+              -Prelease \
+              -Psigning.keyId=$GPG_KEY_ID \
+              -Psigning.password=$GPG_PASSWORD \
+              -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/secring.gpg \
+              -PnexusUsername=SONATYPE_USERNAME \
+              -PnexusPassword=SONATYPE_PASSWORD

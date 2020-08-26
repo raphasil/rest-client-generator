@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
 public @interface GET {
 
 	/**
-	 * A relative path of the endpoint. This value is optional.
+	 * @return A relative path of the endpoint. This value is optional.
 	 */
 	String value() default "";
 }

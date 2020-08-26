@@ -18,6 +18,8 @@
 apply plugin: 'java-library'
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+
+    api project(':api')
+    api project(':resttemplate:resttemplate-generator-spring-boot-autoconfigure')
+
 }

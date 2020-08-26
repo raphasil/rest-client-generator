@@ -35,8 +35,7 @@ import java.lang.annotation.Target;
 public @interface RestClient {
 
 	/**
-	 * The client name to identify a client to be built
-	 *
+	 * @return The client name to identify a client to be built
 	 * @see io.github.raphasil.generator.client.rest.api.provider.ClientProvider
 	 */
 	String value();
@@ -57,8 +56,10 @@ public @interface RestClient {
 	 * }
 	 * </code></pre>
 	 *
-	 * Calling with {@code userService.get(10L)} yields {@code api/user/10}.
-	 * Calling with {@code userService.deleteProfile(10,20)} yields {@code api/user/10/profile/20}.
+	 * Calling with <code>userService.get(10L)</code> yields <code> api/user/10</code>.
+	 * Calling with <code>userService.deleteProfile(10,20)</code> yields <code>api/user/10/profile/20</code>.
+	 *
+	 * @return The base path for this interface
 	 */
 	String path() default "";
 
@@ -99,6 +100,8 @@ public @interface RestClient {
 	 *    }
 	 *  }
 	 *  </code></pre>
+	 *
+	 *  @return A list of annotations
 	 */
 	Class<? extends Annotation>[] annotations() default {};
 }

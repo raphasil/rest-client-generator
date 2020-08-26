@@ -33,3 +33,21 @@ jobs:
       with:
         file: build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml
 
+      # Publish Snapshot to Maven Central
+    - name: Publish Snapshot
+      if: ${{ github.event_name != 'pull_request' }}
+      env:
+        GPG_PRIVITE_KEY: ${{ secrets.GPG_PRIVITE_KEY }}
+        GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      run: |
+        echo $GPG_PRIVITE_KEY | base64 --decode > $GITHUB_WORKSPACE/secring.gpg
+
+        ./gradlew uploadArchives \
+            -Psigning.keyId=$GPG_KEY_ID \
+            -Psigning.password=$GPG_PASSWORD \
+            -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/secring.gpg \
+            -PnexusUsername=SONATYPE_USERNAME \
+            -PnexusPassword=SONATYPE_PASSWORD

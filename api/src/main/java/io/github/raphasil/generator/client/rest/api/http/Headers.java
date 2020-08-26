@@ -47,7 +47,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Headers {
 	/**
-	 * A array of HTTP headers that consists of its name followed by a colon (:), then by its value
+	 * @return A array of HTTP headers that consists of its name followed by a colon (:), then by its value
 	 */
 	String[] value();
 }
