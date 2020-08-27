@@ -49,5 +49,5 @@ jobs:
             -Psigning.keyId=$GPG_KEY_ID \
             -Psigning.password=$GPG_PASSWORD \
             -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/secring.gpg \
-            -PnexusUsername=SONATYPE_USERNAME \
-            -PnexusPassword=SONATYPE_PASSWORD
+            -PnexusUsername=$SONATYPE_USERNAME \
+            -PnexusPassword=$SONATYPE_PASSWORD
