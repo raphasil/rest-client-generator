@@ -42,7 +42,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 
 import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.AnnotationSpec;
@@ -71,8 +70,6 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 
 	private Elements elementUtils;
 
-	private Types typeUtils;
-
 	private Filer filer;
 
 	private Options options;
@@ -81,7 +78,6 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 	public synchronized void init(ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
 		elementUtils = processingEnv.getElementUtils();
-		typeUtils = processingEnv.getTypeUtils();
 		filer = processingEnv.getFiler();
 		options = Options.of(processingEnv.getOptions());
 		logger = ProcessorLogger.create(processingEnv, options.getLogLevel());
@@ -262,13 +258,5 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 		}
 
 		return builder.build();
-	}
-
-	protected boolean isAssigned(final TypeMirror type, final Class<?> clazz) {
-		return typeUtils.isAssignable(type, getTypeElement(clazz));
-	}
-
-	protected boolean isSameType(final TypeMirror type, final Class<?> clazz) {
-		return typeUtils.isSameType(type, getTypeElement(clazz));
 	}
 }
