@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Generated("io.github.raphasil.generator.client.rest.processor.resttemplate.RestClientProcessor")
+@Generated("io.github.raphasil.generator.client.rest.processor.resttemplate.RestTemplateProcessor")
 public class GeneratedSimpleInterface implements SimpleInterface {
 	private final RestTemplate restTemplate;
 

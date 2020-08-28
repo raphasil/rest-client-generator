@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 @Lazy
-@Generated("io.github.raphasil.generator.client.rest.processor.webclient.RestClientProcessor")
+@Generated("io.github.raphasil.generator.client.rest.processor.webclient.WebClientProcessor")
 public class GeneratedInterfaceAllHttpMethod implements InterfaceAllHttpMethod {
 	private final WebClient webClient;
 

@@ -21,3 +21,5 @@ generator:
           basic-auth:
             username: Jon Snow
             password: Daenerys Targaryen
+      client-five:
+        base-url: http://localhost:8381/client-five

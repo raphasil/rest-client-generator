@@ -268,4 +268,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 		return typeUtils.isAssignable(type, getTypeElement(clazz));
 	}
 
+	protected boolean isSameType(final TypeMirror type, final Class<?> clazz) {
+		return typeUtils.isSameType(type, getTypeElement(clazz));
+	}
 }

@@ -125,7 +125,7 @@ public class ClientFourHelper {
 						.withBody(String.valueOf(response))));
 	}
 
-	private String toJSON(final Object object) {
+	static String toJSON(final Object object) {
 		try {
 			return mapper.writeValueAsString(object);
 		} catch (JsonProcessingException e) {
