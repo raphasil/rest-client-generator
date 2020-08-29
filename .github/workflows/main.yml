@@ -33,7 +33,7 @@ jobs:
       with:
         file: build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml
 
-      # Publish Snapshot to Maven Central
+      # Publish Snapshot to Maven Central and GitHub
     - name: Publish Snapshot
       if: ${{ github.event_name != 'pull_request' }}
       env:
@@ -42,6 +42,7 @@ jobs:
         GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo $GPG_PRIVITE_KEY | base64 --decode > $GITHUB_WORKSPACE/secring.gpg
 
@@ -51,3 +52,11 @@ jobs:
             -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/secring.gpg \
             -PnexusUsername=$SONATYPE_USERNAME \
             -PnexusPassword=$SONATYPE_PASSWORD
+
+        ./gradlew uploadArchives \
+                    -Psigning.keyId=$GPG_KEY_ID \
+                    -Psigning.password=$GPG_PASSWORD \
+                    -Psigning.secretKeyRingFile=$GITHUB_WORKSPACE/secring.gpg \
+                    -PsnapshotRepositoryUrl="https://maven.pkg.github.com/raphasil/rest-client-generator"
+                    -PnexusUsername=$GITHUB_ACTOR \
+                    -PnexusPassword=$GITHUB_TOKEN
