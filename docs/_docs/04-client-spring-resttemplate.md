@@ -1,12 +1,14 @@
-# Spring Webclient
+---
+title: "Spring RestTemplate"
+permalink: /docs/client-spring-resttemplate/
+excerpt: "Spring RestTemplate."
+last_modified_at: 2020-08-29
+toc: true
+---
 
-## Introduction
+RestTemplate is a no reactive client, see the [documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#rest-resttemplate "Spring RestTemplate")
 
-WebClient is a reactive client that provides an alternative to the RestTemplate, see the [documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-client "Spring WebClient")
-
-## Getting Started
-
-### Using Spring Boot Starter
+## Using Spring Boot Starter
 
 You can use the starter that will provide an implementation of `ClientProvider` for `WebClient` and some basics configurations.
 
@@ -14,13 +16,10 @@ You can use the starter that will provide an implementation of `ClientProvider` 
 ...
 
 generator:
-  webclient:
+  resttemplate:
     clients:
       client-one: # client name 
         base-url: http://localhost:8383
-        connect-timeout: 1s
-        read-timeout: 5s
-        write-timeout: 3s
         authentication:
           basic-auth:
             username: name
@@ -34,20 +33,20 @@ generator:
 ```
 
 
-#### Gradle
+### Gradle
 For Gradle, you need something along the following lines:
 
 ```groovy
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-webflux' // Spring WebClient
-        implementation 'io.github.raphasil:webclient-generator-spring-boot-starter:0.1'
-        annotationProcessor 'io.github.raphasil:webclient-processor:0.1'
+        implementation 'io.github.raphasil.rest-client-generator:webclient-generator-spring-boot-starter:0.0.1'
+        annotationProcessor 'io.github.raphasil:resttemplate-processor:0.0.1'
     }
 
 ```
 
-#### Maven
+### Maven
 For Maven, you need something along the following lines:
 
 
@@ -62,9 +61,9 @@ For Maven, you need something along the following lines:
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.raphasil</groupId>
+            <groupId>io.github.raphasil.rest-client-generator</groupId>
             <artifactId>webclient-generator-spring-boot-starter</artifactId>
-            <version>0.1</version>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
     
@@ -77,9 +76,9 @@ For Maven, you need something along the following lines:
                 <configuration>                    
                     <annotationProcessorPaths>
                         <path>
-                            <groupId>io.github.raphasil</groupId>
-                            <artifactId>rest-client-generator</artifactId>
-                            <version>0.1</version>
+                            <groupId>io.github.raphasil.rest-client-generator</groupId>
+                            <artifactId>resttemplate-processor</artifactId>
+                            <version>0.0.1</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -89,3 +88,4 @@ For Maven, you need something along the following lines:
 
 </project>
 ```
+

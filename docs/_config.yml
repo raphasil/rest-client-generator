@@ -18,39 +18,63 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
+# Build settings
+remote_theme: mmistakes/minimal-mistakes
+minimal_mistakes_skin: default # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+plugins:
+  - jekyll-feed
+  - jekyll-include-cache
+
+# Site Settings
+locale: "en-US"
 title: Rest Client Generator
+subtitle: Java rest client generator, in a super-easy way!
+name: &name Raphael Nascimento
 email: raphasil@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Java rest client generator, in a super-easy way!
 baseurl: "/rest-client-generator" # the subpath of your site, e.g. /blog
 url: "https://raphasil.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: raphasil
 github_username:  raphasil
 
-author:
-  name: "Raphael Nascimento"
-  avatar: "https://avatars0.githubusercontent.com/u/18558057?s=460&u=e212ea98d215d82cc3dba63be517215e9cd2436b&v=4"
-  bio: "My awesome biography constrained to a sentence or two goes here."
-  location: "Munich, Germany"
+# Site Footer
+footer:
   links:
-    - label: "raphasil@gmail.com"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:raphasil@gmail.com"
-    - label: "@raphasil"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/raphasil"
-    - label: "@raphasil"
-      icon: "fab fa-fw fa-github-square"
+    - label: "github"
+      icon: "fab fa-fw fa-github"
       url: "https://github.com/raphasil"
 
-# Build settings
-remote_theme: mmistakes/minimal-mistakes
-minimal_mistakes_skin: neon
-plugins:
-  - jekyll-feed
-  - jekyll-include-cache
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:path/
+
+# Defaults
+defaults:
+  # _pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+  # _docs
+  - scope:
+      path: ""
+      type: docs
+    values:
+      layout: single
+      read_time: false
+      author_profile: false
+      share: false
+      comments: false
+      sidebar:
+        nav: "docs"
+
+include:
+  - .htaccess
+  - _pages
 
 # Exclude from processing.
 # The following items will not be processed, by default.

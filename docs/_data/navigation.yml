@@ -1,28 +1,34 @@
 docs:
-  - title: Introduction
-    url: '#introduction'
-
   - title: "Getting Started"
-    url: "#getting-started"
+    url: "/docs/quick-start-guide/"
     children:
-      - title: "Spring Web Client"
-        url: "#spring-webclient"
-      - title: "Spring RestTemplate"
-        url: "#spring-resttemplate"
-      - title: "OKHttp"
-        url: "#okhttp"
+      - title: "Clients Implemented"
+        url: "/docs/quick-start-guide/#clients-implemented"
 
   - title: "API Declaration"
-    url: "#api-declaration"
+    url: "/docs/api-declaration/"
     children:
       - title: "Request Method"
-        url: "#request-method"
+        url: "/docs/api-declaration/#request-method"
       - title: "URL Manipulation"
-        url: "#url-manipulation"
+        url: "/docs/api-declaration/#url-manipulation"
       - title: "Request Body"
-        url: "#request-body"
+        url: "/docs/api-declaration/#request-body"
       - title: "Header Manipulation"
-        url: "#header-manipulation"
+        url: "/docs/api-declaration/#header-manipulation"
+
+
+  - title: "Spring WebClient"
+    url: "/docs/client-spring-webclient/"
+    children:
+      - title: "Using Spring Boot Starter"
+        url: "/docs/client-spring-webclient/#using-spring-boot-starter"
+  - title: "Spring RestTemplate"
+    url: "/docs/client-spring-resttemplate/"
+    children:
+      - title: "Using Spring Boot Starter"
+        url: "/docs/client-spring-resttemplate/#using-spring-boot-starter"
+
 main:
   - title: "<i class='fab fa-fw fa-github' aria-hidden='true' title='Source Code'></i>"
     url: "https://github.com/raphasil/rest-client-generator"

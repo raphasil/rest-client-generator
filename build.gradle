@@ -47,7 +47,7 @@ subprojects {
 
 
     group "io.github.raphasil.${rootProject.name}"
-    version = '0.0.1' + (project.hasProperty('release') ? '' : '-SNAPSHOT')
+    version = '0.0.2' + (project.hasProperty('release') ? '' : '-SNAPSHOT')
     sourceCompatibility = JavaVersion.VERSION_14
 
     java {

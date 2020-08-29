@@ -1,35 +1,16 @@
 ---
-layout: single
-title:  "Documentation"
-classes: wide
-author_profile: no
-sidebar:
-  nav: "docs"
+title: "Api Declaration"
+permalink: /docs/api-declaration/
+excerpt: "API Declaration."
+last_modified_at: 2020-08-29
+toc: false
 ---
 
-## Introduction
-
-RestClientGenerator is a Java annotation processor for the implementation of rest calls
-
-## Getting Started
-
-We have some annotation's processor implemented to these clients:
-
-### Spring Webclient
-Take a look in this documentation.
-
-### Spring RestTemplate
-Not Implemented yet.
-
-### OKHttp
-Not Implemented yet.
-
-## API Declaration
 Annotations on the interface methods and its parameters indicate how a request will be handled.
 
-### Request Method
+## Request Method
 Every method must have an HTTP annotation that provides the request method and relative path. 
-There are eight built-in annotations: HTTP, GET, POST, PUT, PATCH, DELETE, OPTIONS and HEAD. 
+There are eight built-in annotations: GET, POST, PUT, PATCH, DELETE, OPTIONS and HEAD. 
 The relative path of the resource can be defined in the annotation.
 
 ```java
@@ -40,7 +21,11 @@ interface UserService {
 }
 ```
 
-### URL Manipulation
+The purpose of the annotations in the code above is the following:
+- `@RestClient` Identify this interface to be available as a REST Client
+- `@GET` define the http method
+
+## URL Manipulation
 A request URL can be updated dynamically using replacement blocks and parameters on the method. 
 A replacement block is an alphanumeric string surrounded by `{` and `}`. 
 A corresponding parameter must be annotated with @Path using the same string or variable name.
@@ -71,7 +56,7 @@ interface UserService {
 }
 ```
 
-### Request Body
+## Request Body
 An object can be specified for use as an HTTP request body with the `@Body` annotation.
 
 ```java
@@ -84,7 +69,7 @@ interface UserService {
 }
 ```
 
-### Header Manipulation
+## Header Manipulation
 You can set static headers for a method using the `@Headers` annotation.
 ```java
 @RestClient("client-one")
@@ -106,3 +91,4 @@ interface UserService {
 
 }
 ```
+

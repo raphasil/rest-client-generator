@@ -1,5 +1,6 @@
 # [Rest Client Generator](https://raphasil.github.io/rest-client-generator/)
-[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://github.com/raphasil/rest-client-generator/blob/master/LICENSE.txt)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.raphasil.rest-client-generator/api?color=blue&label=Latest%20Release)](https://search.maven.org/search?q=g:io.github.raphasil.rest-client-generator)
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://github.com/raphasil/rest-client-generator/blob/master/LICENSE)
 
 [![Build Status](https://github.com/raphasil/rest-client-generator/workflows/CI/badge.svg?branch=master)](https://github.com/raphasil/rest-client-generator/actions?query=branch%3Amaster+workflow%3ACI)
 [![codecov](https://codecov.io/gh/raphasil/rest-client-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/raphasil/rest-client-generator)
@@ -23,16 +24,7 @@ RestClientGenerator is a Java annotation processor for the implementation of res
 
 ## Getting Started
 
-We have some annotation's processor implemented to these clients:
-
-### Spring Webclient
-Take a look in this documentation.
-
-### Spring RestTemplate
-Not Implemented yet.
-
-### OKHttp
-Not Implemented yet.
+Take a look [here](https://raphasil.github.io/rest-client-generator/).
 
 ## API Declaration
 Annotations on the interface methods and its parameters indicate how a request will be handled.
