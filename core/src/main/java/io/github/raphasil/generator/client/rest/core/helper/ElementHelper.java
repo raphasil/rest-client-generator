@@ -46,7 +46,8 @@ public final class ElementHelper {
 				.flatMap(Stream::of)
 				.map(s -> s.split("\\s*:\\s*"))
 				.filter(a -> a.length == 2)
-				.collect(Collectors.toMap(a -> a[0], a -> a[1]));
+				.filter(a -> !a[0].isBlank() && !a[1].isBlank())
+				.collect(Collectors.toMap(a -> a[0].trim(), a -> a[1].trim()));
 	}
 
 	public static String getSimpleName(final Element element) {

@@ -15,20 +15,21 @@
  *
  */
 
-package io.github.raphasil.generator.client.rest.processor.webclient;
+package io.github.raphasil.generator.client.rest.processor.resttemplate;
 
 import static com.google.testing.compile.CompilationSubject.*;
 import static com.google.testing.compile.Compiler.*;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
 
 import io.github.raphasil.generator.client.rest.core.model.Options;
@@ -36,15 +37,15 @@ import io.github.raphasil.generator.client.rest.core.model.Options;
 /**
  * @author Raphael Nascimento
  */
-class RestClientProcessorTest {
+class RestTemplateProcessorTest {
 
 	private static Stream<String> listSuccessTemplates() {
-		final var classLoader = RestClientProcessorTest.class.getClassLoader();
+		final var classLoader = RestTemplateProcessorTest.class.getClassLoader();
 		final var resource = classLoader.getResource("templates/success/source");
-		final var file = resource.getFile();
+		final var file = Objects.requireNonNull(resource).getFile();
 		final var directory = new File(file);
 
-		return Arrays.stream(directory.list()).map(s -> s.replace(".java", ""));
+		return Arrays.stream(Objects.requireNonNull(directory.list())).map(s -> s.replace(".java", ""));
 	}
 
 	@DisplayName("Validate Success Templates")
@@ -55,11 +56,10 @@ class RestClientProcessorTest {
 				.suppressGeneratorComment(true)
 				.suppressGeneratorTimestamp(true)
 				.logLevel("trace")
-				.build()
-				.toCompileArgs();
+				.build().toCompileArgs();
 
-		Compilation compilation = javac().withOptions(options)
-				.withProcessors(new RestClientProcessor())
+		final var compilation = javac().withOptions(options)
+				.withProcessors(new RestTemplateProcessor())
 				.compile(JavaFileObjects.forResource("templates/success/source/" + templateName + ".java"));
 
 		assertThat(compilation).succeeded();
@@ -67,4 +67,22 @@ class RestClientProcessorTest {
 				.hasSourceEquivalentTo(JavaFileObjects.forResource("templates/success/expected/Generated" + templateName + ".java"));
 	}
 
+	@Test
+	void whenNoReturn() {
+
+		final var options = Options.builder()
+				.suppressGeneratorComment(true)
+				.suppressGeneratorTimestamp(true)
+				.logLevel("trace")
+				.build()
+				.toCompileArgs();
+
+		final var compilation = javac().withOptions(options)
+				.withProcessors(new RestTemplateProcessor())
+				.compile(JavaFileObjects.forResource("templates/error/InvalidWhenNoReturnInterface.java"));
+
+		assertThat(compilation).failed();
+		assertThat(compilation).hadErrorContaining("This method is not returning a valid type");
+
+	}
 }

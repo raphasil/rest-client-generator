@@ -15,21 +15,15 @@
  *
  */
 
-apply plugin: 'java-library'
-
-dependencies {
-
-    api project(':api')
-
-    implementation 'com.squareup:javapoet'
-
-    implementation 'com.google.auto:auto-common'
-
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.mockito:mockito-core'
-    testImplementation 'org.assertj:assertj-core'
-}
+/**
+ * <p>
+ * RestClientGenerator is a code generator which simplifies the implementation of rest clients by generating
+ * code at compile time.
+ * </p>
+ * <p>
+ * This package it sub-packages contains several annotations which allow to configure how client interfaces are generated.
+ * </p>
+ *
+ * @author Raphael Nascimento
+ */
+package io.github.raphasil.generator.client.rest.api;

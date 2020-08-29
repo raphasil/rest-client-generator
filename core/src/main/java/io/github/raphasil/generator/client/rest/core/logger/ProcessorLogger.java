@@ -39,20 +39,12 @@ public final class ProcessorLogger {
 
 	public static ProcessorLogger create(final ProcessingEnvironment env, final String level) {
 		final var m = env.getMessager();
-		final var logLevel = EnumHelper.getEnumIgnoreCase(Level.class, level, Level.TRACE).ordinal();
+		final var logLevel = EnumHelper.getEnumIgnoreCase(Level.class, level, Level.WARN).ordinal();
 		return new ProcessorLogger(m, logLevel);
 	}
 
 	public void trace(final String message, final Object... arguments) {
 		log(Level.TRACE, message, arguments);
-	}
-
-	public void debug(final String message, final Object... arguments) {
-		log(Level.DEBUG, message, arguments);
-	}
-
-	public void info(final String message, final Object... arguments) {
-		log(Level.INFO, message, arguments);
 	}
 
 	public void warn(final String message, final Object... arguments) {

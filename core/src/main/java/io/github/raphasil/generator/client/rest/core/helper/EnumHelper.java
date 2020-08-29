@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EnumHelper {
 	public static <E extends Enum<E>> E getEnumIgnoreCase(final Class<E> enumClass, final String enumName, final E defaultEnum) {
-		if (Objects.isNull(enumName) || !enumClass.isEnum()) {
+		if (Objects.isNull(enumName) || Objects.isNull(enumClass)) {
 			return defaultEnum;
 		}
 

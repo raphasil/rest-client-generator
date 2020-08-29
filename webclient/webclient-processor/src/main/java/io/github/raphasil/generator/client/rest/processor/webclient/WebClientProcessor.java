@@ -30,6 +30,9 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.auto.common.MoreTypes;
@@ -48,7 +51,7 @@ import reactor.core.publisher.Mono;
 /**
  * @author Raphael Nascimento
  */
-public class RestClientProcessor extends BaseRestClientProcessor {
+public class WebClientProcessor extends BaseRestClientProcessor {
 
 	@Override
 	protected List<FieldSpec> buildFields() {
@@ -84,23 +87,18 @@ public class RestClientProcessor extends BaseRestClientProcessor {
 				.map(VariableElement::getSimpleName)
 				.map(Objects::toString)
 				.ifPresent(param -> builder.add(".bodyValue($L)", param));
-
-		builder.add(".retrieve()");
-
-		final var returnType = (DeclaredType) scope.getReturnType();
-
-		final var isMono = MoreTypes.isTypeOf(Mono.class, returnType);
-
-		final var returnQualifiedType = (DeclaredType) (returnType.getTypeArguments().size() == 1
-				? returnType.getTypeArguments().get(0)
-				: getTypeElement(String.class));
-
-		builder.addStatement(".$L($T.class)", isMono ? "bodyToMono" : "bodyToFlux", returnQualifiedType);
+		// build
+		// .exchange() ||
+		// .retrieve().toEntity() ||
+		// .retrieve().toMono() ||
+		// .retrieve().toFlux()
+		buildReturn(scope, builder);
 
 		return builder.build();
 	}
 
 	private void validScope(final CodeScope scope) {
+
 		final var returnType = scope.getReturnType();
 
 		final var isMono = MoreTypes.isTypeOf(Mono.class, returnType);
@@ -109,6 +107,29 @@ public class RestClientProcessor extends BaseRestClientProcessor {
 		if (returnType.getKind() != TypeKind.DECLARED || (!isMono && !isFlux)) {
 			throw new IllegalArgumentException(String.format(
 					"This method is not returning a valid type (Mono or Flux), interface: %s method: %s return: %s",
+					scope.getInterfaceAnnotated(),
+					scope.getMethodAnnoted(),
+					returnType));
+		}
+
+		final var declaredReturnType = (DeclaredType) returnType;
+
+		final DeclaredType returnQualifiedType = getQualifiedType(declaredReturnType);
+
+		final var isClientResponse = MoreTypes.isTypeOf(ClientResponse.class, returnQualifiedType);
+		final var isResponseEntity = MoreTypes.isTypeOf(ResponseEntity.class, returnQualifiedType);
+
+		if (isClientResponse && isFlux) {
+			throw new IllegalArgumentException(String.format(
+					"Webclient can only produce a Mono of ClientResponse, interface: %s method: %s return: %s",
+					scope.getInterfaceAnnotated(),
+					scope.getMethodAnnoted(),
+					returnType));
+		}
+
+		if (isResponseEntity && isFlux) {
+			throw new IllegalArgumentException(String.format(
+					"Webclient can only produce a Mono of ResponseEntity, interface: %s method: %s return: %s",
 					scope.getInterfaceAnnotated(),
 					scope.getMethodAnnoted(),
 					returnType));
@@ -151,5 +172,42 @@ public class RestClientProcessor extends BaseRestClientProcessor {
 
 			builder.add("))");
 		}
+	}
+
+	private void buildReturn(final CodeScope scope, final CodeBlock.Builder builder) {
+
+		final var returnType = (DeclaredType) scope.getReturnType();
+
+		final var isMono = MoreTypes.isTypeOf(Mono.class, returnType);
+
+		final var returnQualifiedType = getQualifiedType(returnType);
+
+		final var isClientResponse = MoreTypes.isTypeOf(ClientResponse.class, returnQualifiedType);
+		final var isResponseEntity = MoreTypes.isTypeOf(ResponseEntity.class, returnQualifiedType);
+
+		if (isClientResponse) {
+			builder.addStatement(".exchange()");
+		} else if (isResponseEntity) {
+			final var responseEntityQualifiedType = getQualifiedType(returnQualifiedType);
+			builder.addStatement(".retrieve().toEntity($L)", buildReturnType(responseEntityQualifiedType));
+		} else {
+			builder.addStatement(".retrieve().$L($L)", isMono ? "bodyToMono" : "bodyToFlux", buildReturnType(returnQualifiedType));
+		}
+	}
+
+	private CodeBlock buildReturnType(final DeclaredType type) {
+		final var builder = CodeBlock.builder();
+
+		if (type.getTypeArguments().isEmpty()) {
+			builder.add("$T.class", type);
+		} else {
+			builder.add("new $T<$T>(){}", ParameterizedTypeReference.class, type);
+		}
+
+		return builder.build();
+	}
+
+	private DeclaredType getQualifiedType(final DeclaredType type) {
+		return (DeclaredType) (type.getTypeArguments().size() == 1 ? type.getTypeArguments().get(0) : getTypeElement(Object.class));
 	}
 }

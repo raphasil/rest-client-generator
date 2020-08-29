@@ -18,6 +18,34 @@
 package io.github.raphasil.generator.client.rest.api.provider;
 
 /**
+ * Provider for obtaining client instances configured
+ *
+ * By convention, the generated classes will expect in the constructor an instance of this provider, example:
+ *
+ * <pre><code>
+ *
+ *  &#64;RestClient("custom-client")
+ *  interface CustomClient {
+ *      &#64;GET("resource/{id}")
+ *      Object getResource(@Path Long id);
+ *  }
+ *
+ * 	&#64;Generated
+ * 	class GeneratedCustomClient {
+ * 		private final RestTemplate restTemplate;
+ *
+ * 		GeneratedCustomClient(final ClientProvider&#x3C;RestTemplate&#x3E; provider) {
+ * 			restTemplate = 	provider.getClient("custom-client");
+ *        }
+ *
+ * 	    &#64;Override
+ * 	    public Object getResource(final Long id) {
+ * 	        ...
+ *        }
+ *    }
+ *
+ * </code></pre>
+ *
  * @author Raphael Nascimento (@raphasil)
  */
 public interface ClientProvider<T> {

@@ -52,7 +52,7 @@ import io.github.raphasil.generator.client.rest.core.model.CodeScope;
 /**
  * @author Raphael Nascimento
  */
-public class RestClientProcessor extends BaseRestClientProcessor {
+public class RestTemplateProcessor extends BaseRestClientProcessor {
 	private static final String HTTP_ENTITY_VAR = "request";
 
 	private static final String HEADERS_VAR = "headers";
@@ -116,7 +116,7 @@ public class RestClientProcessor extends BaseRestClientProcessor {
 		var type = returnType;
 		if (isResponseEntity(returnType)) {
 			if (returnType.getTypeArguments().isEmpty()) {
-				type = (DeclaredType) getTypeElement(String.class);
+				type = (DeclaredType) getTypeElement(Object.class);
 			} else {
 				type = (DeclaredType) returnType.getTypeArguments().get(0);
 			}

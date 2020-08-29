@@ -5,7 +5,7 @@ import javax.annotation.processing.Generated;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-@Generated("io.github.raphasil.generator.client.rest.processor.webclient.RestClientProcessor")
+@Generated("io.github.raphasil.generator.client.rest.processor.webclient.WebClientProcessor")
 public class GeneratedInterfaceWithHEADER implements InterfaceWithHEADER {
 	private final WebClient webClient;
 

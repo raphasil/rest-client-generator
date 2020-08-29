@@ -37,12 +37,10 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 
 import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.AnnotationSpec;
@@ -71,8 +69,6 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 
 	private Elements elementUtils;
 
-	private Types typeUtils;
-
 	private Filer filer;
 
 	private Options options;
@@ -81,7 +77,6 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 	public synchronized void init(ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
 		elementUtils = processingEnv.getElementUtils();
-		typeUtils = processingEnv.getTypeUtils();
 		filer = processingEnv.getFiler();
 		options = Options.of(processingEnv.getOptions());
 		logger = ProcessorLogger.create(processingEnv, options.getLogLevel());
@@ -143,7 +138,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 
 		final var methods = generateMethods(interfaceAnnotated);
 
-		final var clazz = TypeSpec.classBuilder("Generated" + ElementHelper.getSimpleName(interfaceAnnotated))
+		final var clazz = TypeSpec.classBuilder("Generated" + interfaceAnnotated.getQualifiedName().toString().replaceAll("\\.", "_"))
 				.addModifiers(Modifier.PUBLIC)
 				.addFields(buildFields())
 				.addSuperinterface(interfaceAnnotated.asType())
@@ -243,7 +238,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 	protected abstract CodeBlock buildCode(final CodeScope scope);
 
 	private String getPackageName(final TypeElement typeElement) {
-		return ((PackageElement) typeElement.getEnclosingElement()).getQualifiedName().toString();
+		return elementUtils.getPackageOf(typeElement).getQualifiedName().toString();
 	}
 
 	protected TypeMirror getTypeElement(final Class<?> clazz) {
@@ -263,9 +258,4 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 
 		return builder.build();
 	}
-
-	protected boolean isAssigned(final TypeMirror type, final Class<?> clazz) {
-		return typeUtils.isAssignable(type, getTypeElement(clazz));
-	}
-
 }

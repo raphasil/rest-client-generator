@@ -1,4 +1,4 @@
-# RestClientGenerator
+# [Rest Client Generator](https://raphasil.github.io/rest-client-generator/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://github.com/raphasil/rest-client-generator/blob/master/LICENSE.txt)
 
 [![Build Status](https://github.com/raphasil/rest-client-generator/workflows/CI/badge.svg?branch=master)](https://github.com/raphasil/rest-client-generator/actions?query=branch%3Amaster+workflow%3ACI)

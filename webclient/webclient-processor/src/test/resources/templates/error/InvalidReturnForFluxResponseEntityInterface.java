@@ -1,3 +1,4 @@
+
 /*
  * Copyright RestClientGenerator
  *
@@ -15,21 +16,16 @@
  *
  */
 
-apply plugin: 'java-library'
+import org.springframework.http.ResponseEntity;
 
-dependencies {
+import io.github.raphasil.generator.client.rest.api.RestClient;
+import io.github.raphasil.generator.client.rest.api.http.method.GET;
+import reactor.core.publisher.Flux;
 
-    api project(':api')
+@RestClient("client-test")
+public interface InvalidReturnForFluxResponseEntityInterface {
 
-    implementation 'com.squareup:javapoet'
+	@GET
+	Flux<ResponseEntity<Object>> get();
 
-    implementation 'com.google.auto:auto-common'
-
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.mockito:mockito-core'
-    testImplementation 'org.assertj:assertj-core'
 }

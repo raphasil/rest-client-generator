@@ -98,6 +98,10 @@ subprojects {
             //// TEST
             testImplementation group: 'com.google.testing.compile', name: 'compile-testing', version: google_compile_testing_version
             testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: junit_jupter_version
+            testImplementation group: 'org.mockito', name: 'mockito-core', version: mockito_version
+            testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.17.0'
+
+
         }
     }
 }
