@@ -47,14 +47,6 @@ public final class ProcessorLogger {
 		log(Level.TRACE, message, arguments);
 	}
 
-	public void debug(final String message, final Object... arguments) {
-		log(Level.DEBUG, message, arguments);
-	}
-
-	public void info(final String message, final Object... arguments) {
-		log(Level.INFO, message, arguments);
-	}
-
 	public void warn(final String message, final Object... arguments) {
 		log(Level.WARN, message, arguments);
 	}
@@ -65,7 +57,6 @@ public final class ProcessorLogger {
 
 	private void log(Level level, final String message, final Object... arguments) {
 		if (logLevel <= level.ordinal()) {
-			System.out.println(String.format(message, arguments));
 			messager.printMessage(level.getDiagnosticKind(), String.format(message, arguments));
 		}
 	}

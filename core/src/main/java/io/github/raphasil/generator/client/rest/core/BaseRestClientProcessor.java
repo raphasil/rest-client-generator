@@ -37,7 +37,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
@@ -139,7 +138,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 
 		final var methods = generateMethods(interfaceAnnotated);
 
-		final var clazz = TypeSpec.classBuilder("Generated" + ElementHelper.getSimpleName(interfaceAnnotated))
+		final var clazz = TypeSpec.classBuilder("Generated" + interfaceAnnotated.getQualifiedName().toString().replaceAll("\\.", "_"))
 				.addModifiers(Modifier.PUBLIC)
 				.addFields(buildFields())
 				.addSuperinterface(interfaceAnnotated.asType())
@@ -239,7 +238,7 @@ public abstract class BaseRestClientProcessor extends AbstractProcessor {
 	protected abstract CodeBlock buildCode(final CodeScope scope);
 
 	private String getPackageName(final TypeElement typeElement) {
-		return ((PackageElement) typeElement.getEnclosingElement()).getQualifiedName().toString();
+		return elementUtils.getPackageOf(typeElement).getQualifiedName().toString();
 	}
 
 	protected TypeMirror getTypeElement(final Class<?> clazz) {

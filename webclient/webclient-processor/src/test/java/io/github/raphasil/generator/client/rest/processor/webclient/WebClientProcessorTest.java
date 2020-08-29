@@ -132,8 +132,7 @@ class WebClientProcessorTest {
 				.suppressGeneratorComment(true)
 				.suppressGeneratorTimestamp(true)
 				.logLevel("trace")
-				.build()
-				.toCompileArgs();
+				.build().toCompileArgs();
 
 		final var compilation = javac().withOptions(options)
 				.withProcessors(new WebClientProcessor())
@@ -143,4 +142,25 @@ class WebClientProcessorTest {
 		assertThat(compilation).hadErrorContaining("Webclient can only produce a Mono of ResponseEntity");
 
 	}
+
+	@Test
+	void whenIsAbstractClass() {
+
+		final var options = Options.builder()
+				.suppressGeneratorComment(true)
+				.suppressGeneratorTimestamp(true)
+				.logLevel("trace")
+				.build()
+				.toCompileArgs();
+
+		final var compilation = javac().withOptions(options)
+				.withProcessors(new WebClientProcessor())
+				.compile(JavaFileObjects.forResource("templates/error/InvalidWhenItIsAClass.java"));
+
+		assertThat(compilation).succeeded();
+		assertThat(compilation).hadWarningContaining(
+				"This element InvalidWhenItIsAClass can not be processed, because it is not an interface");
+
+	}
+
 }

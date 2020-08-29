@@ -1,3 +1,4 @@
+
 /*
  * Copyright RestClientGenerator
  *
@@ -15,21 +16,14 @@
  *
  */
 
-apply plugin: 'java-library'
+import io.github.raphasil.generator.client.rest.api.RestClient;
+import io.github.raphasil.generator.client.rest.api.http.method.GET;
+import reactor.core.publisher.Mono;
 
-dependencies {
+@RestClient("client-test")
+public abstract class InvalidWhenItIsAClass {
 
-    api project(':api')
+	@GET
+	abstract Mono<String> get();
 
-    implementation 'com.squareup:javapoet'
-
-    implementation 'com.google.auto:auto-common'
-
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.mockito:mockito-core'
-    testImplementation 'org.assertj:assertj-core'
 }
