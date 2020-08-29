@@ -34,7 +34,7 @@ configure([
         project {
             name 'Rest Client Generator'
             description 'Java annotation processor for the implementation of rest calls.'
-            url 'https://github.com/raphasil/rest-client-generator'
+            url 'https://raphasil.github.io/rest-client-generator'
             inceptionYear '2020'
 
             scm {
@@ -70,7 +70,7 @@ configure([
 
     nexus {
         sign = true
-        repositoryUrl = repositoryUrl
-        snapshotRepositoryUrl = snapshotRepositoryUrl
+        repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+        snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
     }
 }

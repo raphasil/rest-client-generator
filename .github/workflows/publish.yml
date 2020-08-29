@@ -18,8 +18,8 @@ jobs:
       - name: Build Project
         run: ./gradlew build -Prelease
 
-      # Publish Release to Maven Central
-      - name: Publish Snapshot
+      # Publish Release
+      - name: Publish Release
         env:
           GPG_PRIVITE_KEY: ${{ secrets.GPG_PRIVITE_KEY }}
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
