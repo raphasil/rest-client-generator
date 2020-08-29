@@ -1,3 +1,5 @@
+
+
 /*
  * Copyright RestClientGenerator
  *
@@ -15,45 +17,16 @@
  *
  */
 
-package io.github.raphasil.generator.client.rest.it.resttemplate;
-
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ClientResponse;
 
 import io.github.raphasil.generator.client.rest.api.RestClient;
 import io.github.raphasil.generator.client.rest.api.http.method.GET;
+import reactor.core.publisher.Flux;
 
-/**
- * @author Raphael Nascimento
- */
-@RestClient(value = "client-five", annotations = Component.class)
-public interface ClientFiveComplexReturn {
+@RestClient("client-test")
+public interface InvalidReturnForFluxClientResponseInterface {
 
 	@GET
-	List<Object> getList();
-
-	@GET
-	Map<Object, Object> getMap();
-
-	@GET
-	ResponseEntity<Object> getResponseEntity();
-
-	@GET
-	ResponseEntity<List<Object>> getResponseEntityList();
-
-	@GET
-	ResponseEntity<Map<Object, Object>> getResponseEntityMap();
-
-	@GET
-	Void getVoid();
-
-	@GET
-	ResponseEntity<Void> getResponseEntityVoid();
-
-	@GET
-	ResponseEntity getResponseEntityNoGenericType();
+	Flux<ClientResponse> get();
 
 }

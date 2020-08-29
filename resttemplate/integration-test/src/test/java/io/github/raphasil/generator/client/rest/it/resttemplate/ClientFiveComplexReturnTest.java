@@ -98,4 +98,13 @@ class ClientFiveComplexReturnTest {
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(result.getBody()).isNull();
 	}
+
+	@Test
+	void getResponseEntityNoGenericType() {
+		helper.get(List.of(1, 2, 3));
+		final var result = client.getResponseEntityNoGenericType();
+		assertThat(result).isNotNull();
+		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(result.getBody()).isEqualTo(List.of(1, 2, 3));
+	}
 }

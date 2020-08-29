@@ -57,6 +57,9 @@ public interface ClientFiveComplexReturn {
 	Mono<Void> getMonoVoid();
 
 	@GET
+	Mono getMono();
+
+	@GET
 	Flux<List<Object>> getFluxList();
 
 	@GET
@@ -64,5 +67,8 @@ public interface ClientFiveComplexReturn {
 
 	@GET
 	Flux<Void> getFluxVoid();
+
+	@GET
+	Flux getFlux();
 
 }

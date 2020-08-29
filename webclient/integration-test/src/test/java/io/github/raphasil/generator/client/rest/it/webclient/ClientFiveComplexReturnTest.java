@@ -101,6 +101,13 @@ class ClientFiveComplexReturnTest {
 	}
 
 	@Test
+	void getMono() {
+		helper.get(List.of(1, 2, 3, 4));
+		final var result = client.getMono().block();
+		assertThat(result).isEqualTo(List.of(1, 2, 3, 4));
+	}
+
+	@Test
 	@Disabled("Apparently WebClient can not process Flux<List<Object>> with ParameterizedTypeReference")
 	void getFluxList() {
 		helper.get(List.of(List.of(1, 2, 3, 4)));
@@ -121,6 +128,13 @@ class ClientFiveComplexReturnTest {
 		helper.get(List.of(Map.of("obj", "obj-value")));
 		final var result = client.getFluxVoid().collectList().block();
 		assertThat(result).isNotNull().isEmpty();
+	}
+
+	@Test
+	void getFlux() {
+		helper.get(List.of(Map.of("obj", "obj-value")));
+		final var result = client.getFlux().collectList().block();
+		assertThat(result).isNotNull().isEqualTo(List.of(Map.of("obj", "obj-value")));
 	}
 
 }

@@ -116,7 +116,7 @@ public class RestTemplateProcessor extends BaseRestClientProcessor {
 		var type = returnType;
 		if (isResponseEntity(returnType)) {
 			if (returnType.getTypeArguments().isEmpty()) {
-				type = (DeclaredType) getTypeElement(String.class);
+				type = (DeclaredType) getTypeElement(Object.class);
 			} else {
 				type = (DeclaredType) returnType.getTypeArguments().get(0);
 			}

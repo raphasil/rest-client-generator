@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -55,8 +56,7 @@ class RestTemplateProcessorTest {
 				.suppressGeneratorComment(true)
 				.suppressGeneratorTimestamp(true)
 				.logLevel("trace")
-				.build()
-				.toCompileArgs();
+				.build().toCompileArgs();
 
 		final var compilation = javac().withOptions(options)
 				.withProcessors(new RestTemplateProcessor())
@@ -65,5 +65,24 @@ class RestTemplateProcessorTest {
 		assertThat(compilation).succeeded();
 		assertThat(compilation).generatedSourceFile("Generated" + templateName)
 				.hasSourceEquivalentTo(JavaFileObjects.forResource("templates/success/expected/Generated" + templateName + ".java"));
+	}
+
+	@Test
+	void whenNoReturn() {
+
+		final var options = Options.builder()
+				.suppressGeneratorComment(true)
+				.suppressGeneratorTimestamp(true)
+				.logLevel("trace")
+				.build()
+				.toCompileArgs();
+
+		final var compilation = javac().withOptions(options)
+				.withProcessors(new RestTemplateProcessor())
+				.compile(JavaFileObjects.forResource("templates/error/InvalidWhenNoReturnInterface.java"));
+
+		assertThat(compilation).failed();
+		assertThat(compilation).hadErrorContaining("This method is not returning a valid type");
+
 	}
 }

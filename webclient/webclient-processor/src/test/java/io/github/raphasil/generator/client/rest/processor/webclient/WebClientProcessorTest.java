@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -67,4 +68,79 @@ class WebClientProcessorTest {
 				.hasSourceEquivalentTo(JavaFileObjects.forResource("templates/success/expected/Generated" + templateName + ".java"));
 	}
 
+	@Test
+	void whenDoesNotReturnMonoOrFlux() {
+
+		final var options = Options.builder()
+				.suppressGeneratorComment(true)
+				.suppressGeneratorTimestamp(true)
+				.logLevel("trace")
+				.build()
+				.toCompileArgs();
+
+		final var compilation = javac().withOptions(options)
+				.withProcessors(new WebClientProcessor())
+				.compile(JavaFileObjects.forResource("templates/error/InvalidReturnInterface.java"));
+
+		assertThat(compilation).failed();
+		assertThat(compilation).hadErrorContaining("This method is not returning a valid type (Mono or Flux)");
+
+	}
+
+	@Test
+	void whenNoReturn() {
+
+		final var options = Options.builder()
+				.suppressGeneratorComment(true)
+				.suppressGeneratorTimestamp(true)
+				.logLevel("trace")
+				.build()
+				.toCompileArgs();
+
+		final var compilation = javac().withOptions(options)
+				.withProcessors(new WebClientProcessor())
+				.compile(JavaFileObjects.forResource("templates/error/InvalidWhenNoReturnInterface.java"));
+
+		assertThat(compilation).failed();
+		assertThat(compilation).hadErrorContaining("This method is not returning a valid type (Mono or Flux)");
+
+	}
+
+	@Test
+	void whenReturnFluxClientResponse() {
+
+		final var options = Options.builder()
+				.suppressGeneratorComment(true)
+				.suppressGeneratorTimestamp(true)
+				.logLevel("trace")
+				.build()
+				.toCompileArgs();
+
+		final var compilation = javac().withOptions(options)
+				.withProcessors(new WebClientProcessor())
+				.compile(JavaFileObjects.forResource("templates/error/InvalidReturnForFluxClientResponseInterface.java"));
+
+		assertThat(compilation).failed();
+		assertThat(compilation).hadErrorContaining("Webclient can only produce a Mono of ClientResponse");
+
+	}
+
+	@Test
+	void whenReturnFluxResponseEntity() {
+
+		final var options = Options.builder()
+				.suppressGeneratorComment(true)
+				.suppressGeneratorTimestamp(true)
+				.logLevel("trace")
+				.build()
+				.toCompileArgs();
+
+		final var compilation = javac().withOptions(options)
+				.withProcessors(new WebClientProcessor())
+				.compile(JavaFileObjects.forResource("templates/error/InvalidReturnForFluxResponseEntityInterface.java"));
+
+		assertThat(compilation).failed();
+		assertThat(compilation).hadErrorContaining("Webclient can only produce a Mono of ResponseEntity");
+
+	}
 }

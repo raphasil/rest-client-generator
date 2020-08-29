@@ -39,7 +39,7 @@ public final class ProcessorLogger {
 
 	public static ProcessorLogger create(final ProcessingEnvironment env, final String level) {
 		final var m = env.getMessager();
-		final var logLevel = EnumHelper.getEnumIgnoreCase(Level.class, level, Level.TRACE).ordinal();
+		final var logLevel = EnumHelper.getEnumIgnoreCase(Level.class, level, Level.WARN).ordinal();
 		return new ProcessorLogger(m, logLevel);
 	}
 
@@ -65,6 +65,7 @@ public final class ProcessorLogger {
 
 	private void log(Level level, final String message, final Object... arguments) {
 		if (logLevel <= level.ordinal()) {
+			System.out.println(String.format(message, arguments));
 			messager.printMessage(level.getDiagnosticKind(), String.format(message, arguments));
 		}
 	}
